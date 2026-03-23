@@ -393,6 +393,19 @@ npm install puppeteer
         <div class="wizard-body">
           <h4>Vai usar Badge de Identificação nos slides?</h4>
           <p>O badge é a sua "assinatura visual" — aparece no topo de cada slide de conteúdo com sua foto de perfil, nome e @handle. Ajuda o leitor a identificar quem criou o carrossel enquanto está passando os slides.</p>
+
+          <!-- Exemplos visuais reais -->
+          <div style="margin:14px 0 10px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <div style="background:#f8fafc;padding:10px 14px 6px;">
+              <div style="font-size:.62rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Exemplo — badge-black.png (slides brancos)</div>
+              <img src="../assets/badge-black-example.png" alt="Badge exemplo versão preta" style="max-width:100%;height:auto;border-radius:4px;display:block;">
+            </div>
+            <div style="background:#0f172a;padding:10px 14px 6px;border-top:1px solid rgba(255,255,255,.06);">
+              <div style="font-size:.62rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Exemplo — badge-white.png (slides pretos / capa / CTA)</div>
+              <img src="../assets/badge-white-example.png" alt="Badge exemplo versão branca" style="max-width:100%;height:auto;border-radius:4px;display:block;">
+            </div>
+          </div>
+
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;margin-bottom:10px;">
             <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,.1);">
               <div style="font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">badge-black.png</div>
@@ -409,15 +422,16 @@ npm install puppeteer
             <strong style="color:var(--yellow);font-size:.78rem;">📐 Requisitos do arquivo:</strong>
             <ul style="margin-top:6px;padding-left:0;list-style:none;">
               <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Formato PNG com fundo <strong>transparente</strong> (não JPG — JPG não tem transparência)</li>
-              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Tamanho mínimo: <strong>400×80px</strong> (formato horizontal/wide)</li>
-              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Conteúdo: foto circular + nome + @handle lado a lado</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Tamanho: <strong>1128×396px</strong> (proporção 3:1, formato horizontal)</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Conteúdo: foto circular + nome + @handle lado a lado (ver exemplos acima)</li>
               <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Pode exportar do Figma, Canva (PNG com fundo transparente) ou Photoshop</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">💡 Arquivos de exemplo estão em <code>assets/badge-black-example.png</code> e <code>assets/badge-white-example.png</code></li>
             </ul>
           </div>
           <div class="options">
             <span class="opt default">Sim — vou enviar meus 2 PNGs</span>
             <span class="opt">Sim — quero que a IA gere automaticamente</span>
-            <span class="opt">Não por agora — usar badge genérico</span>
+            <span class="opt">Não por agora — usar badge de exemplo</span>
           </div>
         </div>
       </div>
@@ -546,6 +560,19 @@ npm install puppeteer
         <div class="wizard-body">
           <h4>Badge do perfil — 2 versões obrigatórias</h4>
           <p>O badge aparece no topo de todos os slides de texto. Como os slides têm fundos diferentes, são necessárias <strong>duas versões</strong>:</p>
+
+          <!-- Exemplos visuais reais -->
+          <div style="margin:14px 0 10px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <div style="background:#f8fafc;padding:10px 14px 6px;">
+              <div style="font-size:.62rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">badge-black.png — slides brancos</div>
+              <img src="../assets/badge-black-example.png" alt="Badge exemplo versão preta" style="max-width:100%;height:auto;border-radius:4px;display:block;">
+            </div>
+            <div style="background:#0f172a;padding:10px 14px 6px;border-top:1px solid rgba(255,255,255,.06);">
+              <div style="font-size:.62rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">badge-white.png — slides pretos / capa / CTA</div>
+              <img src="../assets/badge-white-example.png" alt="Badge exemplo versão branca" style="max-width:100%;height:auto;border-radius:4px;display:block;">
+            </div>
+          </div>
+
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;margin-bottom:10px;">
             <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,.1);">
               <div style="font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">badge-black.png</div>

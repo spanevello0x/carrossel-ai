@@ -102,8 +102,17 @@ Vai usar Badge de Identificação nos slides?
 
 O badge é sua "assinatura visual" — aparece no topo de cada slide com sua
 foto de perfil, nome e @handle.
+```
 
-São necessárias 2 versões:
+Antes de continuar, enviar os dois arquivos de exemplo para o usuário visualizar:
+- Enviar `skills/carrossel-ai/assets/badge-black-example.png` com legenda:
+  "Exemplo: badge-black.png → usado nos slides brancos (texto + imagem)"
+- Enviar `skills/carrossel-ai/assets/badge-white-example.png` com legenda:
+  "Exemplo: badge-white.png → usado nos slides pretos e na capa"
+
+Depois continuar com o texto:
+```
+São necessárias 2 versões (como nos exemplos acima):
   • badge-black.png → para slides de fundo BRANCO (texto escuro)
   • badge-white.png → para slides de fundo PRETO (texto claro / capa / CTA)
 
@@ -115,11 +124,12 @@ Requisitos do arquivo PNG:
   ❌ Nunca usar JPG (não tem transparência)
 
 1. Sim — vou enviar meus 2 PNGs agora  [recomendado]
-2. Sim — quero que a IA gere automaticamente
-3. Não por agora — usar badge genérico
+2. Sim — quero que a IA gere automaticamente (usando nome + @handle configurados)
+3. Não por agora — usar badge genérico de exemplo
 ```
 Se escolher opção 1: solicitar upload de `badge-black.png` e `badge-white.png`, salvar em `skills/carrossel-ai/assets/`.
-Se escolher opção 2: gerar badge usando nome + handle configurados.
+Se escolher opção 2: gerar badge usando nome + handle configurados via Puppeteer (mesmo método dos exemplos).
+Se escolher opção 3: copiar `badge-black-example.png` e `badge-white-example.png` como badge padrão.
 Salvar em: `config.badge.enabled`, `config.badge.black_path`, `config.badge.white_path`
 
 ### Pergunta 9 — Gerenciador de senhas
