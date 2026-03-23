@@ -1,8 +1,7 @@
 ---
 name: carrossel-ai
-description: "Engine completo para criar carrosseis Instagram com IA. Pesquisa fonte, escreve roteiro, gera imagens (Imagen 3), renderiza slides e entrega no Telegram/WhatsApp — tudo em ~10 minutos."
+description: "Engine completo para criar carrosseis Instagram com IA. Pesquisa fonte, escreve roteiro, gera imagens via Nano Banana Pro, renderiza slides e entrega no Telegram/WhatsApp — tudo em ~10 minutos."
 version: "1.0.0"
-author: "diegospanevello"
 ---
 
 # CarrosselAI Skill
@@ -13,7 +12,7 @@ Você fornece um tema ou link. O assistente:
 1. Pesquisa e extrai a fonte
 2. Propõe 3 ângulos de abordagem
 3. Gera roteiro completo (10 slides)
-4. Gera 5 variações de capa + imagens contextuais via Imagen 3
+4. Gera 5 variações de capa + imagens contextuais via Nano Banana Pro
 5. Renderiza os slides com Puppeteer
 6. Entrega os PNGs + 3 variações de legenda
 
@@ -143,13 +142,13 @@ Salvar em: `config.credentials.manager` ("1password" | "env")
 
 ### Pergunta 10 — API do Google Gemini
 ```
-Agora precisamos da sua API Key do Google Gemini (Imagen 3).
+Agora precisamos da sua API Key do Google para o Nano Banana Pro.
 
-As imagens são geradas pelo Google Imagen 3 — modelo otimizado
-especificamente para este workflow. Não recomendamos outros providers
-(Midjourney, DALL-E, etc.) pois o estilo foi calibrado para o Imagen 3.
+As imagens são geradas pelo Nano Banana Pro — skill OpenClaw que usa os
+modelos de imagem do Google. Não recomendamos substituições (Midjourney,
+DALL-E, etc.) pois o workflow foi calibrado para esses modelos.
 
-Como obter sua API Key GRATUITA:
+Como obter sua API Key:
   1. Acesse: aistudio.google.com
   2. Faça login com sua conta Google
   3. Clique em "Get API Key" no menu lateral
@@ -210,7 +209,7 @@ Perfil: [nome] (@handle)
 Nicho: [nicho]
 Tom: [tom de voz]
 Modo: [semi-auto / auto]
-Imagens: Google Imagen 3
+Imagens: Nano Banana Pro (Google)
 Entrega: [canal configurado]
 
 Agora é só dizer: "Cria um carrossel sobre [tema]"
@@ -338,7 +337,7 @@ Se dois cernes seguidos forem inevitáveis, inserir um slide de transição curt
 
 ---
 
-### PASSO 5 — Gerar Imagens (Imagen 3)
+### PASSO 5 — Gerar Imagens (Nano Banana Pro)
 
 #### 5a — 5 variações de capa
 
@@ -599,4 +598,4 @@ Cada legenda:
 
 ---
 
-*Workflow desenvolvido e validado em produção por [@diego.spanevello](https://www.instagram.com/diego.spanevello)*
+*Consulte sempre a versão mais recente do Nano Banana Pro: `clawhub install nano-banana-pro`*

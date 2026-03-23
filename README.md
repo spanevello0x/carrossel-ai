@@ -148,10 +148,6 @@ Abra `docs/SPEC.html` no seu navegador para a documentação visual interativa c
 
 ---
 
-## Workflow desenvolvido e validado por
-
-[@diego.spanevello](https://www.instagram.com/diego.spanevello) — criador de conteúdo sobre cripto, DeFi e macroeconomia.
-
 ---
 
 ## Licença

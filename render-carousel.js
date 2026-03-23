@@ -16,12 +16,12 @@
 
 'use strict';
 
-const puppeteer = require('/home/molt/.openclaw/workspace/node_modules/puppeteer');
+const puppeteer = require('puppeteer');
 const fs = require('fs');
 const path = require('path');
 
 // ── Constantes (calibradas com Figma refs) ──────────────────────────────────
-const ASSETS_DIR = path.resolve(__dirname, '../skills/carrossel-intus/assets');
+const ASSETS_DIR = path.resolve(__dirname, '../skills/carrossel-ai/assets');
 const BADGE_BLACK = path.join(ASSETS_DIR, 'badge-black.png');
 const BADGE_WHITE = path.join(ASSETS_DIR, 'badge-white.png');
 

@@ -1,4 +1,4 @@
-# Banco de Capas Vencedoras — Intus Cripto
+# Banco de Capas — CarrosselAI
 
 Catálogo de tipos de capa com dois modelos de entrega de prompt JSON.
 

@@ -80,7 +80,7 @@ if [ -z "$GEMINI_API_KEY" ]; then
   echo "   Para configurar, adicione ao seu ~/.bashrc ou ~/.zshrc:"
   echo "   export GEMINI_API_KEY=\"sua-chave-aqui\""
   echo ""
-  echo "   Obter API Key gratuita: https://aistudio.google.com"
+  echo "   Obter API Key: https://aistudio.google.com"
   echo ""
   echo "   Ou configure via 1Password (será perguntado no setup)."
 else
