@@ -402,7 +402,7 @@ JSON de imagem contextual:
 }
 ```
 
-Gerar imagens com Nano Banana Pro:
+Gerar imagens com **Nano Banana Pro** (`clawhub install nano-banana-pro`):
 ```bash
 # Ler API Key conforme configuração
 # Se 1Password:
@@ -410,13 +410,16 @@ GEMINI_API_KEY=$(op read "op://VAULT_NAME/ITEM/credential")
 # Se .env:
 source skills/carrossel-ai/.env
 
-# Gerar imagem
+# Gerar imagem via Nano Banana Pro
 GEMINI_API_KEY="$GEMINI_API_KEY" uv run ~/.npm-global/lib/node_modules/openclaw/skills/nano-banana-pro/scripts/generate_image.py \
   --prompt "PROMPT_AQUI" \
   --filename "slideXX-nome.png" \
   --aspect-ratio "3:2" \
   --resolution 1K
 ```
+
+> ⚠️ Instale sempre a versão mais recente do Nano Banana Pro via `clawhub install nano-banana-pro`.
+> O modelo Imagen utilizado pode evoluir — consulte o changelog da skill para a versão ativa.
 
 ---
 

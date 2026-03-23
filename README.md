@@ -3,7 +3,7 @@
 > Engine completo de produção de carrosseis Instagram com IA. Da pesquisa à entrega em ~10 minutos.
 
 [![OpenClaw Compatible](https://img.shields.io/badge/OpenClaw-Compatible-39FF14?style=flat-square)](https://openclaw.ai)
-[![Imagen 3](https://img.shields.io/badge/Imagen_3-Powered-4285F4?style=flat-square)](https://aistudio.google.com)
+[![Nano Banana Pro](https://img.shields.io/badge/Nano_Banana_Pro-Powered-4285F4?style=flat-square)](https://clawhub.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
 
 ---
@@ -26,7 +26,36 @@ IA: pesquisa → roteiro → capas → imagens → render → entrega no Telegra
 
 - [OpenClaw](https://openclaw.ai) instalado e funcionando
 - Node.js 18+ (`node --version`)
-- API Key do Google AI Studio (grátis) — [obter aqui](https://aistudio.google.com)
+- **Nano Banana Pro** instalado (`clawhub install nano-banana-pro`)
+- API Key do Google — [obter aqui](https://aistudio.google.com)
+
+---
+
+## Geração de Imagens — Nano Banana Pro
+
+As imagens são geradas pelo **Nano Banana Pro** (skill OpenClaw), que utiliza o **Google Imagen** — o modelo de geração de imagens do Google, calibrado para produzir capas e slides com identidade visual consistente.
+
+> ⚠️ **Não recomendamos substituições** (Midjourney, DALL-E, Stable Diffusion etc.).
+> O workflow de prompts desta skill foi desenvolvido e validado especificamente para o Imagen.
+> Outros modelos produzirão resultados inconsistentes com o sistema de layouts.
+
+### Instalando o Nano Banana Pro
+
+```bash
+clawhub install nano-banana-pro
+```
+
+Após instalar, configure sua API Key do Google:
+
+```bash
+# Via variável de ambiente
+export GEMINI_API_KEY="sua-chave-aqui"
+
+# Ou via 1Password (recomendado)
+op item create --vault "MeuVault" --title "Google AI" credential="sua-chave-aqui"
+```
+
+Para obter sua API Key: [aistudio.google.com](https://aistudio.google.com) → "Get API Key" → "Create API Key"
 
 ---
 
@@ -34,12 +63,13 @@ IA: pesquisa → roteiro → capas → imagens → render → entrega no Telegra
 
 ### Via ClawHub (recomendado)
 ```bash
-clawhub install carrossel-ai
+clawhub install nano-banana-pro   # dependência de imagens
+clawhub install carrossel-ai      # esta skill
 ```
 
 ### Manual
 ```bash
-git clone https://github.com/diegospanevello/carrossel-ai
+git clone https://github.com/spanevello0x/carrossel-ai
 cd carrossel-ai
 bash setup.sh
 ```
@@ -59,7 +89,7 @@ Na primeira execução, o assistente faz 13 perguntas de setup (< 3 minutos):
 7. Outras fontes de conteúdo
 8. Badge de identificação (PNG)
 9. Gerenciador de senhas (1Password ou .env)
-10. API Key do Google Gemini (Imagen 3)
+10. API Key do Google (para Nano Banana Pro)
 11. Canal de entrega (Telegram / WhatsApp / local)
 12. Google Drive (opcional)
 13. Modo autônomo vs semi-autônomo
@@ -84,11 +114,13 @@ Após o setup, simplesmente diga ao seu assistente OpenClaw:
 
 | Item | Custo |
 |------|-------|
-| Por carrossel completo (10 slides + 5-6 imagens) | ~R$ 2,00 |
+| Por carrossel completo (10 slides + 5–6 imagens) | ~R$ 2,00 |
 | 30 carrosseis/mês | ~R$ 60,00 |
 | Render + entrega | Gratuito |
 
 > 💡 Para reduzir custo: use 3 imagens contextuais por carrossel → ~R$ 1,20
+
+O custo se refere ao uso da API do Google via Nano Banana Pro. Consulte a versão mais recente da skill em [clawhub.com](https://clawhub.com) para os modelos disponíveis e preços atualizados.
 
 ---
 
@@ -104,8 +136,8 @@ carrossel-ai/
 │   ├── SPEC.html          # Documentação visual completa
 │   └── banco-capas.md     # Referência dos 10 tipos de capa
 └── assets/
-    ├── badge-black.png    # Exemplo de badge (fundo branco)
-    └── badge-white.png    # Exemplo de badge (fundo preto)
+    ├── badge-black-example.png    # Exemplo de badge (fundo branco)
+    └── badge-white-example.png    # Exemplo de badge (fundo preto)
 ```
 
 ---
