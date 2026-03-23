@@ -1,0 +1,38 @@
+{
+  "profile": {
+    "name": "",
+    "handle": "",
+    "niche": "",
+    "tone": "",
+    "language": "pt-BR"
+  },
+  "sources": {
+    "twitter": false,
+    "twitter_api_key": "",
+    "other": ["url", "text"]
+  },
+  "badge": {
+    "enabled": true,
+    "black_path": "assets/badge-black.png",
+    "white_path": "assets/badge-white.png",
+    "auto_generate": false
+  },
+  "credentials": {
+    "manager": "env",
+    "onepassword_vault": "",
+    "gemini_env_var": "GEMINI_API_KEY"
+  },
+  "delivery": {
+    "channel": "local",
+    "telegram_chat_id": "",
+    "telegram_topic_id": "",
+    "whatsapp_number": ""
+  },
+  "storage": {
+    "google_drive": false,
+    "drive_folder_id": "",
+    "local_output_dir": "./output"
+  },
+  "mode": "semi-auto",
+  "version": "1.0.0"
+}

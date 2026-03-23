@@ -1,0 +1,26 @@
+# Configuração pessoal (não versionar)
+config.json
+.env
+
+# Output gerado
+output/
+/tmp/
+
+# Assets pessoais (badges do usuário)
+assets/badge-black.png
+assets/badge-white.png
+
+# Node
+node_modules/
+npm-debug.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Slides gerados (arquivos grandes)
+*.png
+!assets/badge-*-example.png
+
+# Logs
+*.log

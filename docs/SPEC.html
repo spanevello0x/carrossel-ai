@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CarrosselAI Skill — Especificação para Distribuição</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface2: #1a1a26;
+    --border: rgba(255,255,255,0.08);
+    --neon: #39FF14;
+    --neon2: #00d4ff;
+    --yellow: #FFE500;
+    --red: #e05252;
+    --purple: #a78bfa;
+    --text: #e2e8f0;
+    --text-muted: #64748b;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, sans-serif; font-size: 14px; line-height: 1.6; }
+
+  /* NAV */
+  .top-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .top-bar .logo { font-size: 1.1rem; font-weight: 700; color: var(--neon); letter-spacing: .5px; }
+  .top-bar .meta { font-size: .75rem; color: var(--text-muted); }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 99px; font-size: .7rem; font-weight: 700; }
+  .pill-green { background: rgba(57,255,20,.12); color: var(--neon); border: 1px solid rgba(57,255,20,.25); }
+  .pill-blue { background: rgba(0,212,255,.12); color: var(--neon2); border: 1px solid rgba(0,212,255,.25); }
+  .pill-yellow { background: rgba(255,229,0,.12); color: var(--yellow); border: 1px solid rgba(255,229,0,.25); }
+  .pill-red { background: rgba(224,82,82,.12); color: var(--red); border: 1px solid rgba(224,82,82,.25); }
+  .pill-purple { background: rgba(167,139,250,.12); color: var(--purple); border: 1px solid rgba(167,139,250,.25); }
+
+  /* SIDEBAR + CONTENT */
+  .layout { display: flex; min-height: calc(100vh - 53px); }
+  .sidebar { width: 240px; min-width: 240px; background: var(--surface); border-right: 1px solid var(--border); padding: 24px 0; position: sticky; top: 53px; height: calc(100vh - 53px); overflow-y: auto; }
+  .sidebar-section { padding: 8px 20px 4px; font-size: .65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; }
+  .sidebar a { display: block; padding: 7px 20px; color: #94a3b8; font-size: .82rem; text-decoration: none; border-left: 2px solid transparent; transition: all .15s; }
+  .sidebar a:hover, .sidebar a.active { color: var(--neon); border-left-color: var(--neon); background: rgba(57,255,20,.05); }
+  .main { flex: 1; padding: 40px 48px; max-width: 960px; }
+
+  /* HERO */
+  .hero { background: linear-gradient(135deg, rgba(57,255,20,.06) 0%, rgba(0,212,255,.04) 100%); border: 1px solid rgba(57,255,20,.15); border-radius: 16px; padding: 40px; margin-bottom: 40px; }
+  .hero h1 { font-size: 2rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .hero h1 span { color: var(--neon); }
+  .hero p { color: #94a3b8; font-size: 1rem; max-width: 600px; line-height: 1.7; }
+  .hero-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 20px; }
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px; }
+  .stat-card { background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-align: center; }
+  .stat-card .num { font-size: 1.8rem; font-weight: 800; color: var(--neon); }
+  .stat-card .label { font-size: .7rem; color: var(--text-muted); margin-top: 2px; }
+
+  /* SECTIONS */
+  section { margin-bottom: 48px; scroll-margin-top: 70px; }
+  h2 { font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  h3 { font-size: .95rem; font-weight: 700; color: var(--neon2); margin: 24px 0 12px; }
+  p { color: #94a3b8; margin-bottom: 12px; line-height: 1.7; }
+
+  /* SETUP WIZARD */
+  .wizard-step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 12px; display: flex; gap: 16px; align-items: flex-start; }
+  .wizard-num { width: 32px; min-width: 32px; height: 32px; border-radius: 50%; background: rgba(57,255,20,.12); border: 1px solid rgba(57,255,20,.3); color: var(--neon); font-weight: 800; font-size: .85rem; display: flex; align-items: center; justify-content: center; }
+  .wizard-body h4 { font-size: .9rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .wizard-body p { margin: 0; font-size: .82rem; color: #94a3b8; }
+  .wizard-body .field-type { font-size: .72rem; color: var(--yellow); margin-top: 6px; font-weight: 600; }
+  .wizard-body .options { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+  .opt { padding: 3px 10px; border-radius: 6px; font-size: .72rem; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1); color: #cbd5e1; }
+  .opt.default { border-color: rgba(57,255,20,.3); color: var(--neon); }
+
+  /* FEATURE CARDS */
+  .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+  .feature-card .icon { font-size: 1.5rem; margin-bottom: 10px; }
+  .feature-card h4 { font-size: .9rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .feature-card p { font-size: .8rem; margin: 0; }
+
+  /* SLIDE TYPES */
+  .slide-types { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .slide-type { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .slide-type .type-name { font-size: .75rem; font-weight: 700; color: var(--neon2); font-family: monospace; margin-bottom: 8px; }
+  .slide-type h4 { font-size: .88rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .slide-type p { font-size: .78rem; margin: 0; }
+  .slide-preview { background: #000; border-radius: 8px; margin-top: 10px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: .65rem; color: #555; border: 1px solid #222; position: relative; overflow: hidden; }
+
+  /* CAPA TYPES */
+  .capa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .capa-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
+  .capa-card .tipo { font-size: .65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .capa-card h4 { font-size: .82rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .capa-card p { font-size: .75rem; margin: 0; }
+  .capa-preview { height: 64px; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: flex-end; padding: 8px; background: linear-gradient(to bottom, #1a1a2e 0%, #000 70%); position: relative; overflow: hidden; }
+  .capa-headline { font-size: .58rem; font-weight: 800; color: var(--yellow); text-transform: uppercase; line-height: 1.2; z-index: 2; }
+
+  /* MODES */
+  .mode-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .mode-card { background: var(--surface); border-radius: var(--radius); padding: 24px; }
+  .mode-card.auto { border: 2px solid rgba(57,255,20,.3); }
+  .mode-card.semi { border: 2px solid rgba(255,229,0,.3); }
+  .mode-card h4 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+  .mode-card.auto h4 { color: var(--neon); }
+  .mode-card.semi h4 { color: var(--yellow); }
+  .mode-card ul { list-style: none; padding: 0; }
+  .mode-card ul li { font-size: .82rem; color: #94a3b8; padding: 4px 0; display: flex; gap: 8px; }
+
+  /* WORKFLOW FLOW */
+  .flow { display: flex; flex-direction: column; gap: 4px; }
+  .flow-wave { margin-bottom: 16px; }
+  .flow-wave-label { font-size: .7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .flow-steps { display: flex; gap: 8px; flex-wrap: wrap; }
+  .flow-step { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 14px; font-size: .78rem; }
+  .flow-step .agent { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+  .flow-step.nerd .agent { color: var(--neon2); }
+  .flow-step.copy .agent { color: var(--purple); }
+  .flow-step.design .agent { color: #f97316; }
+  .flow-step.dev .agent { color: var(--neon); }
+  .flow-step.pause { border-color: rgba(255,229,0,.4); background: rgba(255,229,0,.05); }
+  .flow-step.pause .agent { color: var(--yellow); }
+  .flow-arrow { text-align: center; color: var(--text-muted); font-size: 1rem; margin: 4px 0; }
+
+  /* PRICING */
+  .price-table { width: 100%; border-collapse: collapse; }
+  .price-table th { text-align: left; padding: 10px 12px; background: rgba(255,255,255,.04); font-size: .75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .5px; }
+  .price-table td { padding: 10px 12px; border-top: 1px solid var(--border); font-size: .82rem; vertical-align: top; }
+  .price-table tr:hover td { background: rgba(255,255,255,.02); }
+  .price-total { background: rgba(57,255,20,.06); border: 1px solid rgba(57,255,20,.2); border-radius: 10px; padding: 16px 20px; margin-top: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .price-total .num { font-size: 1.5rem; font-weight: 800; color: var(--neon); }
+
+  /* INSTALL */
+  .install-steps { counter-reset: install; }
+  .install-step { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px 18px 56px; margin-bottom: 10px; position: relative; }
+  .install-step::before { counter-increment: install; content: counter(install); position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; background: rgba(57,255,20,.12); border: 1px solid rgba(57,255,20,.3); color: var(--neon); font-weight: 800; font-size: .82rem; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 28px; }
+  .install-step h4 { font-size: .88rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .install-step p { font-size: .8rem; margin: 0; }
+  code { background: rgba(255,255,255,.08); padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: .82em; color: var(--neon2); }
+  pre { background: #0d0d14; border: 1px solid var(--border); border-radius: 8px; padding: 16px; overflow-x: auto; font-size: .78rem; line-height: 1.6; color: #a5f3fc; margin: 12px 0; }
+
+  /* RULES */
+  .rule-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .rule-item { background: var(--surface); border-radius: 8px; padding: 14px 16px; border-left: 3px solid; }
+  .rule-item.ok { border-color: var(--neon); }
+  .rule-item.no { border-color: var(--red); }
+  .rule-item .label { font-size: .65rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 6px; }
+  .rule-item.ok .label { color: var(--neon); }
+  .rule-item.no .label { color: var(--red); }
+  .rule-item p { font-size: .8rem; margin: 0; }
+
+  /* FOOTER */
+  footer { background: var(--surface); border-top: 1px solid var(--border); padding: 32px 48px; text-align: center; color: var(--text-muted); font-size: .8rem; }
+  footer strong { color: #fff; }
+
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main { padding: 24px 20px; }
+    .stats-row, .feature-grid, .slide-types, .capa-grid, .mode-cards, .rule-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo">🎠 CarrosselAI Skill</div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span class="pill pill-green">v1.0</span>
+    <span class="pill pill-blue">OpenClaw Compatible</span>
+    <span class="meta">Spec criada em 23/03/2026</span>
+  </div>
+</div>
+
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section">Produto</div>
+    <a href="#overview" onclick="setActive(this)">Visão Geral</a>
+    <a href="#install" onclick="setActive(this)">Instalação</a>
+    <a href="#setup" onclick="setActive(this)">Configuração Inicial</a>
+
+    <div class="sidebar-section">Como Funciona</div>
+    <a href="#modes" onclick="setActive(this)">Modos de Operação</a>
+    <a href="#workflow" onclick="setActive(this)">Fluxo de Execução</a>
+    <a href="#architecture" onclick="setActive(this)">Arquitetura</a>
+
+    <div class="sidebar-section">Componentes</div>
+    <a href="#slide-types" onclick="setActive(this)">Tipos de Slide</a>
+    <a href="#capa-types" onclick="setActive(this)">Tipos de Capa</a>
+    <a href="#contextual" onclick="setActive(this)">Imagens Contextuais</a>
+    <a href="#cta-types" onclick="setActive(this)">Tipos de CTA</a>
+
+    <div class="sidebar-section">Referência</div>
+    <a href="#pricing" onclick="setActive(this)">Custo por Carrossel</a>
+    <a href="#rules" onclick="setActive(this)">Regras Permanentes</a>
+    <a href="#roadmap" onclick="setActive(this)">Roadmap & Evoluções</a>
+  </nav>
+
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <h1>🎠 <span>CarrosselAI</span> Skill</h1>
+      <p>Engine completo de produção de carrosseis Instagram com IA. Da pesquisa à entrega: pesquisa de fonte, roteiro, capas, imagens, render e upload — tudo executado pelo seu agente OpenClaw, sem configuração extra.</p>
+      <div class="hero-badges">
+        <span class="pill pill-green">Agente Único</span>
+        <span class="pill pill-blue">Nano Banana Pro (Imagen 3)</span>
+        <span class="pill pill-yellow">Render Puppeteer</span>
+        <span class="pill pill-purple">Google Drive (opcional)</span>
+        <span class="pill pill-red">Telegram / WhatsApp</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="num">~8min</div><div class="label">Do brief à entrega</div></div>
+        <div class="stat-card"><div class="num">10</div><div class="label">Tipos de capa</div></div>
+        <div class="stat-card"><div class="num">4</div><div class="label">Tipos de slide</div></div>
+        <div class="stat-card"><div class="num">~R$2</div><div class="label">Custo por carrossel</div></div>
+      </div>
+    </div>
+
+    <!-- O QUE É ISSO - PARA LEIGOS -->
+    <section id="overview">
+      <h2>💡 O que é o CarrosselAI?</h2>
+
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-bottom:20px;">
+        <p style="font-size:.95rem;color:#e2e8f0;line-height:1.8;margin:0;">
+          Você digita um tema ou cola o link de uma notícia. O assistente pesquisa, escreve o roteiro, gera as imagens, monta os slides e envia tudo pronto para o seu Telegram ou WhatsApp — em menos de 10 minutos, sem você precisar abrir Canva, Photoshop ou qualquer outro programa.
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;">
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">🗣️</div>
+          <div style="font-size:.82rem;font-weight:700;color:#fff;">Você fala o tema</div>
+          <div style="font-size:.75rem;color:#64748b;margin-top:4px;">"Quero um carrossel sobre Bitcoin e inflação"</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">🤖</div>
+          <div style="font-size:.82rem;font-weight:700;color:#fff;">A IA faz tudo</div>
+          <div style="font-size:.75rem;color:#64748b;margin-top:4px;">Pesquisa, escreve, gera imagens, monta slides</div>
+        </div>
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;">
+          <div style="font-size:1.8rem;margin-bottom:6px;">📲</div>
+          <div style="font-size:.82rem;font-weight:700;color:#fff;">Você recebe pronto</div>
+          <div style="font-size:.75rem;color:#64748b;margin-top:4px;">Slides PNG + legendas no seu Telegram</div>
+        </div>
+      </div>
+
+      <h3>👥 Para quem é</h3>
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:8px;">
+        <div style="background:var(--surface);border-radius:8px;padding:12px 14px;border-left:3px solid var(--neon);font-size:.82rem;color:#94a3b8;"><strong style="color:#fff;">Maria | Finanças Pessoais</strong><br/>Quer postar conteúdo de qualidade sem passar horas no Canva.</div>
+        <div style="background:var(--surface);border-radius:8px;padding:12px 14px;border-left:3px solid var(--neon2);font-size:.82rem;color:#94a3b8;"><strong style="color:#fff;">Rafael | Investimentos</strong><br/>Criador que quer escalar produção de 2 para 15 posts/mês.</div>
+        <div style="background:var(--surface);border-radius:8px;padding:12px 14px;border-left:3px solid var(--purple);font-size:.82rem;color:#94a3b8;"><strong style="color:#fff;">Ana | Negócios Digitais</strong><br/>Empreendedora que quer presença no Instagram sem contratar designer.</div>
+        <div style="background:var(--surface);border-radius:8px;padding:12px 14px;border-left:3px solid #f97316;font-size:.82rem;color:#94a3b8;"><strong style="color:#fff;">Lucas | Marketing &amp; IA</strong><br/>Agência que quer automatizar produção de conteúdo para múltiplos clientes.</div>
+      </div>
+    </section>
+
+    <!-- INSTALL -->
+    <section id="install">
+      <h2>📦 Instalação</h2>
+      <div class="install-steps">
+        <div class="install-step">
+          <h4>Instalar via ClawHub</h4>
+          <p>No terminal do seu OpenClaw: <code>clawhub install carrossel-ai</code></p>
+        </div>
+        <div class="install-step">
+          <h4>Ou clonar o repositório</h4>
+          <pre>git clone https://github.com/openclaw-skills/carrossel-ai
+cp -r carrossel-ai ~/.openclaw/workspace/skills/carrossel-ai</pre>
+        </div>
+        <div class="install-step">
+          <h4>Instalar dependências de render</h4>
+          <pre>cd ~/.openclaw/workspace
+npm install puppeteer
+# Puppeteer fará download do Chromium automaticamente</pre>
+        </div>
+        <div class="install-step">
+          <h4>Responder o questionário de configuração</h4>
+          <p>Na primeira vez que chamar o skill, o assistente faz as perguntas da seção abaixo e salva tudo automaticamente. Pode refazer a qualquer momento com <code>/carrossel-setup</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETUP WIZARD -->
+    <section id="setup">
+      <h2>⚙️ Questionário de Configuração</h2>
+      <p>O assistente faz estas perguntas uma a uma na primeira execução. Leva menos de 3 minutos. Todas as respostas ficam salvas em <code>config.json</code> — você não precisa repetir toda vez.</p>
+
+      <div style="background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:14px 18px;margin-bottom:24px;">
+        <strong style="color:var(--neon2);font-size:.82rem;">ℹ️ Para leigos:</strong>
+        <span style="color:#94a3b8;font-size:.8rem;"> Você não precisa saber programar. O assistente vai guiando com perguntas simples. Se não souber alguma resposta, pode digitar "pular" e configurar depois.</span>
+      </div>
+
+      <h3>👤 Sobre o seu perfil</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">1</div>
+        <div class="wizard-body">
+          <h4>Qual é o seu nome ou nome do perfil?</h4>
+          <p>Como você assina seu conteúdo no Instagram. Vai aparecer no badge de identificação dos slides.</p>
+          <div style="background:rgba(255,255,255,.04);border-radius:6px;padding:8px 12px;margin-top:8px;font-size:.78rem;color:#94a3b8;">
+            💬 Exemplos: <em>"Maria | Finanças"</em>, <em>"Rafael Crypto"</em>, <em>"Ana Negócios"</em>, <em>"Lucas | Marketing"</em>
+          </div>
+          <div class="field-type">📝 Texto livre</div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">2</div>
+        <div class="wizard-body">
+          <h4>Qual é o seu @handle do Instagram?</h4>
+          <p>O @ do seu perfil. Também aparece no badge dos slides como elemento visual.</p>
+          <div style="background:rgba(255,255,255,.04);border-radius:6px;padding:8px 12px;margin-top:8px;font-size:.78rem;color:#94a3b8;">
+            💬 Exemplos: <em>@maria.financas</em>, <em>@rafaelcrypto</em>, <em>@ananego</em>
+          </div>
+          <div class="field-type">📝 Texto começando com @</div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">3</div>
+        <div class="wizard-body">
+          <h4>Qual é o seu nicho de atuação?</h4>
+          <p>Define o vocabulário, exemplos e referências que serão usados nos roteiros.</p>
+          <div class="options">
+            <span class="opt default">Cripto / DeFi / Web3</span>
+            <span class="opt">Finanças pessoais / Investimentos</span>
+            <span class="opt">Negócios / Empreendedorismo</span>
+            <span class="opt">Marketing / Vendas</span>
+            <span class="opt">Tecnologia / IA</span>
+            <span class="opt">Saúde / Bem-estar</span>
+            <span class="opt">Educação</span>
+            <span class="opt">Outro (descrever)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">4</div>
+        <div class="wizard-body">
+          <h4>Qual é o seu tom de voz padrão?</h4>
+          <p>Como você gosta de se comunicar com sua audiência. Isso define o estilo dos textos dos slides e das legendas.</p>
+          <div class="options">
+            <span class="opt default">Provocador / Direto (choca, questiona, confronta)</span>
+            <span class="opt">Educativo / Didático (explica com paciência, usa exemplos)</span>
+            <span class="opt">Técnico / Analítico (dados, gráficos, profundidade)</span>
+            <span class="opt">Informal / Próximo (como conversa com amigo)</span>
+            <span class="opt">Formal / Institucional (sério, corporativo)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">5</div>
+        <div class="wizard-body">
+          <h4>Em qual idioma você produz conteúdo?</h4>
+          <div class="options">
+            <span class="opt default">Português (Brasil)</span>
+            <span class="opt">English</span>
+            <span class="opt">Español</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>🔗 Fontes de Conteúdo</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">6</div>
+        <div class="wizard-body">
+          <h4>Você vai usar o X (Twitter) como fonte de conteúdo?</h4>
+          <p>Se sim, o assistente pode buscar tweets, threads e análises diretamente do X para usar como base dos carrosseis. Requer configuração da API.</p>
+          <div class="options">
+            <span class="opt">Sim, quero usar o X como fonte</span>
+            <span class="opt default">Não por agora — vou colar o texto ou link manualmente</span>
+          </div>
+          <div style="margin-top:8px;font-size:.75rem;color:#475569;">Se escolher "Sim": o assistente vai guiar a configuração da API do X (Twitter) separadamente.</div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">7</div>
+        <div class="wizard-body">
+          <h4>Quais outras fontes você quer usar?</h4>
+          <p>O assistente pode buscar conteúdo de diversas fontes para montar o roteiro do carrossel.</p>
+          <div class="options">
+            <span class="opt default">Links de artigos / notícias (você cola a URL)</span>
+            <span class="opt">PDFs e relatórios (você envia o arquivo)</span>
+            <span class="opt">YouTube (você cola o link do vídeo)</span>
+            <span class="opt">Texto livre (você digita o resumo)</span>
+            <span class="opt">Pesquisa automática na web pelo tema</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>🖼️ Badge e Identidade Visual</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">8</div>
+        <div class="wizard-body">
+          <h4>Vai usar Badge de Identificação nos slides?</h4>
+          <p>O badge é a sua "assinatura visual" — aparece no topo de cada slide de conteúdo com sua foto de perfil, nome e @handle. Ajuda o leitor a identificar quem criou o carrossel enquanto está passando os slides.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;margin-bottom:10px;">
+            <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,.1);">
+              <div style="font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">badge-black.png</div>
+              <div style="font-size:.75rem;color:#111;font-weight:700;">Versão escura</div>
+              <div style="font-size:.72rem;color:#555;margin-top:3px;">Para slides de fundo <strong>branco</strong></div>
+            </div>
+            <div style="background:#111;border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,.1);">
+              <div style="font-size:.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">badge-white.png</div>
+              <div style="font-size:.75rem;color:#fff;font-weight:700;">Versão clara</div>
+              <div style="font-size:.72rem;color:#94a3b8;margin-top:3px;">Para slides de fundo <strong>preto</strong> (capa + CTA)</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,229,0,.07);border:1px solid rgba(255,229,0,.2);border-radius:8px;padding:10px 14px;margin-bottom:10px;">
+            <strong style="color:var(--yellow);font-size:.78rem;">📐 Requisitos do arquivo:</strong>
+            <ul style="margin-top:6px;padding-left:0;list-style:none;">
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Formato PNG com fundo <strong>transparente</strong> (não JPG — JPG não tem transparência)</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Tamanho mínimo: <strong>400×80px</strong> (formato horizontal/wide)</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Conteúdo: foto circular + nome + @handle lado a lado</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Pode exportar do Figma, Canva (PNG com fundo transparente) ou Photoshop</li>
+            </ul>
+          </div>
+          <div class="options">
+            <span class="opt default">Sim — vou enviar meus 2 PNGs</span>
+            <span class="opt">Sim — quero que a IA gere automaticamente</span>
+            <span class="opt">Não por agora — usar badge genérico</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>🔑 API de Geração de Imagens</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">9</div>
+        <div class="wizard-body">
+          <h4>Você usa o 1Password como gerenciador de senhas?</h4>
+          <p>O 1Password é um cofre digital que guarda suas senhas e chaves de API com segurança. Se você já o usa, o skill pode buscar suas credenciais diretamente de lá — sem você precisar colar a chave toda vez e sem ela ficar exposta em arquivos de texto.</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;margin-bottom:12px;">
+            <div style="background:rgba(57,255,20,.05);border:1px solid rgba(57,255,20,.2);border-radius:8px;padding:14px;">
+              <div style="font-size:.7rem;font-weight:700;color:var(--neon);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">✅ Com 1Password</div>
+              <p style="font-size:.78rem;color:#94a3b8;margin:0;">As chaves ficam no cofre do 1Password. O assistente usa <code>op read</code> para buscar automaticamente — zero exposição, zero digitação.</p>
+              <div style="margin-top:8px;font-size:.72rem;color:#475569;">Ideal para quem já usa e preza por segurança máxima.</div>
+            </div>
+            <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:14px;">
+              <div style="font-size:.7rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">📄 Sem 1Password</div>
+              <p style="font-size:.78rem;color:#94a3b8;margin:0;">As chaves ficam salvas em variável de ambiente local (<code>.env</code>) ou no <code>config.json</code> da skill. Simples de configurar, funciona normalmente.</p>
+              <div style="margin-top:8px;font-size:.72rem;color:#475569;">Adequado para uso pessoal em máquina própria.</div>
+            </div>
+          </div>
+          <div class="options">
+            <span class="opt default">Sim — uso 1Password (informar vault name)</span>
+            <span class="opt">Não — prefiro usar variável de ambiente (.env)</span>
+            <span class="opt">Não sei / não uso gerenciador de senhas</span>
+          </div>
+          <div style="background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.15);border-radius:8px;padding:10px 14px;margin-top:10px;">
+            <strong style="color:var(--neon2);font-size:.75rem;">ℹ️ Não usa nenhum gerenciador?</strong>
+            <span style="font-size:.75rem;color:#94a3b8;"> Tudo bem — o assistente vai pedir a API Key uma vez e salvar em arquivo local protegido. Você não precisará digitar novamente.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">10</div>
+        <div class="wizard-body">
+          <h4>Configure sua API do Google Gemini (Imagen 3)</h4>
+          <p>As imagens dos carrosseis são geradas pelo Google Imagen 3 — o modelo de imagem mais avançado disponível atualmente. <strong>Não recomendamos outros providers</strong> (Midjourney, DALL-E, etc.) pois o estilo e qualidade foram otimizados especificamente para o Imagen 3.</p>
+          <div style="background:rgba(57,255,20,.05);border:1px solid rgba(57,255,20,.2);border-radius:8px;padding:12px 14px;margin-top:10px;margin-bottom:10px;">
+            <strong style="color:var(--neon);font-size:.8rem;">Como obter sua API Key gratuita:</strong>
+            <ol style="margin-top:8px;padding-left:18px;font-size:.78rem;color:#94a3b8;line-height:1.9;">
+              <li>Acesse <code>aistudio.google.com</code></li>
+              <li>Faça login com sua conta Google</li>
+              <li>Clique em <strong>"Get API Key"</strong> no menu lateral</li>
+              <li>Clique em <strong>"Create API Key"</strong></li>
+              <li>Copie a chave gerada e cole aqui no assistente</li>
+            </ol>
+          </div>
+          <div style="font-size:.75rem;color:#475569;margin-top:6px;">💰 Custo: tier gratuito disponível com limites diários. Para uso intenso (~50+ carrosseis/mês), o custo é de aproximadamente $0,04 por imagem gerada.</div>
+          <div class="field-type">🔐 A chave é salva com segurança no seu ambiente local — nunca compartilhada</div>
+        </div>
+      </div>
+
+      <h3>📦 Entrega e Armazenamento</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">11</div>
+        <div class="wizard-body">
+          <h4>Onde quer receber os slides prontos?</h4>
+          <p>Após o render, o assistente envia os PNGs prontos para onde você preferir.</p>
+          <div class="options">
+            <span class="opt default">Telegram (informar Chat ID)</span>
+            <span class="opt">WhatsApp</span>
+            <span class="opt">Só salvar na pasta local</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">12</div>
+        <div class="wizard-body">
+          <h4>Quer arquivar os carrosseis no Google Drive?</h4>
+          <p>Se sim, cada carrossel é salvo automaticamente em uma pasta organizada por data e tema. Útil para manter histórico e acessar de qualquer dispositivo.</p>
+          <div class="options">
+            <span class="opt">Sim — informar ID da pasta no Drive</span>
+            <span class="opt default">Não por agora</span>
+          </div>
+          <div style="margin-top:8px;font-size:.75rem;color:#475569;">Se escolher "Sim": o assistente vai guiar a configuração do Google Drive separadamente.</div>
+        </div>
+      </div>
+
+      <h3>🤖 Modo de Operação</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">13</div>
+        <div class="wizard-body">
+          <h4>Prefere controlar o processo ou receber tudo automático?</h4>
+          <p>Define se o assistente vai pedir sua aprovação antes de avançar, ou vai entregar o carrossel completo sem interrupções.</p>
+          <div class="options">
+            <span class="opt">Autônomo — entrega sem me perguntar</span>
+            <span class="opt default">Semi-autônomo — quero aprovar o ângulo e o CTA antes de gerar</span>
+          </div>
+          <div style="margin-top:8px;font-size:.75rem;color:#64748b;">💡 Recomendamos começar no modo semi-autônomo para validar o estilo antes de automatizar completamente.</div>
+        </div>
+      </div>
+
+      <div style="background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.2);border-radius:12px;padding:20px 24px;margin-top:24px;">
+        <strong style="color:var(--neon);">✅ Pronto! Configuração salva.</strong>
+        <p style="margin-top:8px;margin-bottom:0;font-size:.82rem;">Agora é só dizer: <em>"Cria um carrossel sobre [seu tema]"</em> e o assistente cuida do resto. Para mudar qualquer configuração depois, use <code>/carrossel-setup</code>.</p>
+      </div>
+
+      <h3 style="margin-top:32px;">💸 Quanto vai custar?</h3>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;">
+        <p style="font-size:.85rem;color:#94a3b8;margin-bottom:16px;">Estimativa por carrossel completo (10 slides + 5–6 imagens geradas):</p>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;">
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.4rem;font-weight:800;color:var(--neon);">~R$2</div>
+            <div style="font-size:.72rem;color:#64748b;margin-top:3px;">Por carrossel completo</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.4rem;font-weight:800;color:var(--neon2);">~R$60</div>
+            <div style="font-size:.72rem;color:#64748b;margin-top:3px;">30 carrosseis/mês</div>
+          </div>
+          <div style="background:rgba(255,255,255,.04);border-radius:8px;padding:14px;text-align:center;">
+            <div style="font-size:1.4rem;font-weight:800;color:var(--yellow);">75%</div>
+            <div style="font-size:.72rem;color:#64748b;margin-top:3px;">Do custo = imagens</div>
+          </div>
+        </div>
+        <p style="font-size:.78rem;color:#475569;margin:0;">💡 Para reduzir custo: usar menos imagens contextuais (3 em vez de 5–6 por carrossel) reduz para ~R$1,20 por carrossel.</p>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">3</div>
+        <div class="wizard-body">
+          <h4>Badge do perfil — 2 versões obrigatórias</h4>
+          <p>O badge aparece no topo de todos os slides de texto. Como os slides têm fundos diferentes, são necessárias <strong>duas versões</strong>:</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;margin-bottom:10px;">
+            <div style="background:#fff;border-radius:8px;padding:12px;border:1px solid rgba(0,0,0,.1);">
+              <div style="font-size:.65rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">badge-black.png</div>
+              <div style="font-size:.75rem;color:#111;font-weight:700;">Texto escuro</div>
+              <div style="font-size:.72rem;color:#555;margin-top:3px;">Usado nos slides de fundo branco (<code style="background:rgba(0,0,0,.08);color:#333">texto_cheio</code> e <code style="background:rgba(0,0,0,.08);color:#333">texto_curto_imagem</code>)</div>
+            </div>
+            <div style="background:#111;border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,.1);">
+              <div style="font-size:.65rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;">badge-white.png</div>
+              <div style="font-size:.75rem;color:#fff;font-weight:700;">Texto claro</div>
+              <div style="font-size:.72rem;color:#94a3b8;margin-top:3px;">Usado na capa e no slide CTA (<code style="color:#39FF14">capa</code> e <code style="color:#39FF14">cta_preto</code>)</div>
+            </div>
+          </div>
+          <div style="background:rgba(255,229,0,.07);border:1px solid rgba(255,229,0,.2);border-radius:8px;padding:10px 14px;margin-top:6px;">
+            <strong style="color:var(--yellow);font-size:.78rem;">📐 Requisitos técnicos do PNG:</strong>
+            <ul style="margin-top:6px;padding-left:0;list-style:none;">
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Fundo <strong>transparente</strong> (alpha channel) — nunca fundo branco ou preto</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Resolução mínima: <strong>400×80px</strong> (horizontal, formato wide)</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Conteúdo: foto de perfil (circular) + nome + @handle</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">✅ Exportar do Figma, Canva ou Photoshop em PNG-24 com transparência</li>
+              <li style="font-size:.78rem;color:#94a3b8;padding:2px 0;">❌ Nunca JPG (não suporta transparência)</li>
+            </ul>
+          </div>
+          <div class="field-type" style="margin-top:10px;">📎 Upload de 2 arquivos PNG: badge-black.png + badge-white.png — ou gerar automaticamente</div>
+          <div class="options" style="margin-top:8px;">
+            <span class="opt default">Upload meus 2 PNGs</span>
+            <span class="opt">Gerar automaticamente com IA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">4</div>
+        <div class="wizard-body">
+          <h4>Nicho / Tema principal</h4>
+          <p>Define o vocabulário, referências e exemplos que o COPYWRITER vai usar nos roteiros.</p>
+          <div class="options">
+            <span class="opt default">Cripto / DeFi</span>
+            <span class="opt">Finanças pessoais</span>
+            <span class="opt">Negócios / Empreendedorismo</span>
+            <span class="opt">Tecnologia / IA</span>
+            <span class="opt">Marketing</span>
+            <span class="opt">Outro (descrever)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">5</div>
+        <div class="wizard-body">
+          <h4>Tom de voz</h4>
+          <p>Influencia o estilo de escrita dos slides, ganchos e CTAs.</p>
+          <div class="options">
+            <span class="opt default">Provocador / Direto</span>
+            <span class="opt">Educativo / Didático</span>
+            <span class="opt">Técnico / Analítico</span>
+            <span class="opt">Informal / Próximo</span>
+            <span class="opt">Formal / Institucional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">6</div>
+        <div class="wizard-body">
+          <h4>Idioma</h4>
+          <div class="options">
+            <span class="opt default">Português BR</span>
+            <span class="opt">English</span>
+            <span class="opt">Español</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>🔑 APIs e Integrações</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">7</div>
+        <div class="wizard-body">
+          <h4>API Key — Nano Banana Pro (Google AI Studio)</h4>
+          <p>Usada para gerar todas as imagens (capas + imagens contextuais) via Google Imagen 3.<br/>
+          Obter em: <code>aistudio.google.com → API Keys</code> — tier gratuito disponível com limites diários.</p>
+          <div class="field-type">🔐 Salvo no 1Password vault ou variável de ambiente GEMINI_API_KEY</div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">8</div>
+        <div class="wizard-body">
+          <h4>Google Drive (opcional)</h4>
+          <p>Faz upload automático de todos os arquivos do carrossel (PNGs + legendas.txt) em uma pasta organizada por data/tema.</p>
+          <div class="field-type">📂 ID da pasta Drive (opcional) — ou desativar</div>
+          <div class="options">
+            <span class="opt default">Ativar (informar ID da pasta)</span>
+            <span class="opt">Desativar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="wizard-step">
+        <div class="wizard-num">9</div>
+        <div class="wizard-body">
+          <h4>Canal de entrega</h4>
+          <p>Onde os slides renderizados serão enviados após o render.</p>
+          <div class="options">
+            <span class="opt default">Telegram (informar chat ID + topic ID)</span>
+            <span class="opt">WhatsApp</span>
+            <span class="opt">Só salvar localmente</span>
+          </div>
+        </div>
+      </div>
+
+      <h3>🤖 Modo de Operação</h3>
+
+      <div class="wizard-step">
+        <div class="wizard-num">10</div>
+        <div class="wizard-body">
+          <h4>Autonomia do fluxo</h4>
+          <p>Define se o assistente pede aprovação antes de avançar, ou entrega sem interrupções.</p>
+          <div class="options">
+            <span class="opt default">Autônomo total — entrega sem perguntar</span>
+            <span class="opt">Semi-autônomo — pausa para aprovar ângulo + CTA</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODES -->
+    <section id="modes">
+      <h2>🤖 Modos de Operação</h2>
+      <div class="mode-cards">
+        <div class="mode-card auto">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span style="font-size:1.4rem">🚀</span>
+            <div>
+              <h4>Modo Autônomo</h4>
+              <span class="pill pill-green" style="font-size:.65rem">Padrão</span>
+            </div>
+          </div>
+          <ul>
+            <li>✅ Pesquisa a fonte automaticamente</li>
+            <li>✅ Escolhe o ângulo mais forte</li>
+            <li>✅ Define o CTA contextualizado</li>
+            <li>✅ Gera roteiro + capas + imagens</li>
+            <li>✅ Renderiza + envia + faz upload</li>
+            <li>✅ Zero interrupções do usuário</li>
+          </ul>
+          <p style="margin-top:12px;font-size:.78rem;color:#64748b;">Ideal para quem quer produção em escala sem precisar revisar cada passo.</p>
+        </div>
+        <div class="mode-card semi">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span style="font-size:1.4rem">⏸️</span>
+            <div>
+              <h4>Modo Semi-Autônomo</h4>
+              <span class="pill pill-yellow" style="font-size:.65rem">Controle total</span>
+            </div>
+          </div>
+          <ul>
+            <li>✅ Pesquisa a fonte automaticamente</li>
+            <li>⏸️ Propõe 3 ângulos → aguarda escolha</li>
+            <li>⏸️ Propõe CTA → aguarda confirmação</li>
+            <li>✅ Gera roteiro + capas + imagens</li>
+            <li>✅ Renderiza + envia + faz upload</li>
+          </ul>
+          <p style="margin-top:12px;font-size:.78rem;color:#64748b;">Ideal para quem quer controle editorial sobre o ângulo e mensagem do carrossel.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARCHITECTURE NOTE -->
+    <section id="architecture">
+      <h2>🏗️ Arquitetura — Agente Único</h2>
+
+      <div style="background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.2);border-radius:12px;padding:20px 24px;margin-bottom:20px;">
+        <strong style="color:var(--neon);font-size:.9rem;">✅ Agente único — sem dependências externas</strong>
+        <p style="margin-top:8px;margin-bottom:0;font-size:.82rem;">O CarrosselAI funciona com qualquer assistente OpenClaw padrão. Não requer configuração de múltiplos agentes, sessões paralelas ou sub-agentes especializados. Tudo roda sequencialmente na mesma sessão, usando as ferramentas nativas do OpenClaw.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">🔧</div>
+          <h4>Ferramentas utilizadas</h4>
+          <ul style="padding-left:0;list-style:none;margin-top:8px;">
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ <code>web_search</code> / <code>web_fetch</code> — pesquisa</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ <code>exec</code> — gerar imagens + render</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ <code>write</code> / <code>read</code> — arquivos</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ <code>message</code> — entregar slides</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">🔑 Nano Banana Pro (Imagen 3) via API key</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">📂 Google Drive via gogcli (opcional)</li>
+          </ul>
+        </div>
+        <div class="feature-card">
+          <div class="icon">⚡</div>
+          <h4>Compatibilidade</h4>
+          <ul style="padding-left:0;list-style:none;margin-top:8px;">
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ Qualquer OpenClaw padrão</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ Sem configuração de multi-agente</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ Sem agents.json personalizado</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ Sem sessions_spawn ou sub-agentes</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ Node.js + Puppeteer no host</li>
+            <li style="font-size:.8rem;color:#94a3b8;padding:3px 0;">✅ API key Google AI Studio (gratuita)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORKFLOW -->
+    <section id="workflow">
+      <h2>🔄 Fluxo de Execução</h2>
+      <p>O agente principal executa todos os passos sequencialmente na mesma sessão. Sem spawnar sub-agentes.</p>
+
+      <div class="flow">
+        <div class="flow-wave">
+          <div class="flow-wave-label">Passo 1 — Pesquisa</div>
+          <div class="flow-steps">
+            <div class="flow-step nerd"><div class="agent">AGENTE PRINCIPAL</div>Lê fonte (URL, Twitter, PDF, texto colado) via web_search / web_fetch</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-wave">
+          <div class="flow-wave-label">Passo 2 — Ângulos</div>
+          <div class="flow-steps">
+            <div class="flow-step copy"><div class="agent">AGENTE PRINCIPAL</div>Propõe 3 ângulos com gatilho emocional de cada</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-wave">
+          <div class="flow-wave-label">⏸️ Pausa (Semi-Autônomo) ou decisão interna (Autônomo)</div>
+          <div class="flow-steps">
+            <div class="flow-step pause"><div class="agent">USUÁRIO</div>Escolhe ângulo + confirma CTA</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-wave">
+          <div class="flow-wave-label">Passo 3 — Roteiro + Legendas</div>
+          <div class="flow-steps">
+            <div class="flow-step copy"><div class="agent">AGENTE PRINCIPAL</div>Gera 10 slides completos + 3 variações de legenda</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-wave">
+          <div class="flow-wave-label">Passo 4 — Capas</div>
+          <div class="flow-steps">
+            <div class="flow-step design"><div class="agent">AGENTE PRINCIPAL</div>Propõe 5 variações de capa com JSON completo</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-wave">
+          <div class="flow-wave-label">Passo 5 — Geração de Imagens</div>
+          <div class="flow-steps">
+            <div class="flow-step design"><div class="agent">AGENTE PRINCIPAL</div>Gera capa (4:5, 2K) + imagens contextuais (3:2, 1K) via exec → Imagen 3</div>
+          </div>
+        </div>
+
+        <div class="flow-arrow">↓</div>
+
+        <div class="flow-wave">
+          <div class="flow-wave-label">Passo 6 — Render + Entrega</div>
+          <div class="flow-steps">
+            <div class="flow-step dev"><div class="agent">AGENTE PRINCIPAL</div>Render Puppeteer (render-carousel.js) → envia slides → upload Drive (opcional)</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:rgba(255,229,0,.05);border:1px solid rgba(255,229,0,.2);border-radius:10px;padding:14px 18px;">
+        <strong style="color:var(--yellow);font-size:.82rem;">⏱️ Tempo total estimado:</strong>
+        <span style="color:#94a3b8;font-size:.8rem;"> ~8–12 minutos do brief à entrega (vs ~5–8 min na versão multi-agente interna). A diferença é pela execução sequencial — cada passo espera o anterior completar.</span>
+      </div>
+    </section>
+
+    <!-- SLIDE TYPES -->
+    <section id="slide-types">
+      <h2>📐 Tipos de Slide</h2>
+      <p>O render engine (<code>render-carousel.js</code>) suporta 4 layouts. O COPYWRITER escolhe o tipo correto para cada slide com base na densidade do conteúdo.</p>
+
+      <div class="slide-types">
+        <div class="slide-type">
+          <div class="type-name">capa</div>
+          <h4>Slide de Capa</h4>
+          <p>Imagem full-bleed (4:5) com gradiente escuro no terço inferior, headline em amarelo neon e badge branco. Sem texto de corpo.</p>
+          <div class="slide-preview" style="background:linear-gradient(to bottom,#1a1a2e,#000);">
+            <div style="position:absolute;bottom:8px;left:8px;font-size:.6rem;color:#FFE500;font-weight:800;">HEADLINE IMPACTANTE</div>
+          </div>
+        </div>
+
+        <div class="slide-type">
+          <div class="type-name">texto_cheio</div>
+          <h4>Texto Cheio</h4>
+          <p>Fundo branco, badge no topo, texto grande ocupa toda a área. Usado quando há 4+ linhas de conteúdo. Sem imagem.</p>
+          <div class="slide-preview" style="background:#fff;">
+            <div style="color:#111;font-size:.55rem;padding:6px;line-height:1.4;text-align:left;">
+              Texto educativo<br/>com conteúdo denso<br/>e dados relevantes<br/>que precisam de espaço
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-type">
+          <div class="type-name">texto_curto_imagem</div>
+          <h4>Texto Curto + Imagem</h4>
+          <p>Fundo branco, badge no topo, texto curto (até 3 linhas) + imagem contextual 3:2 embaixo com rounded corners.</p>
+          <div class="slide-preview" style="background:#fff;flex-direction:column;align-items:flex-start;padding:6px;">
+            <div style="color:#111;font-size:.55rem;margin-bottom:4px;">Texto curto aqui</div>
+            <div style="background:#333;width:100%;height:40px;border-radius:4px;"></div>
+          </div>
+        </div>
+
+        <div class="slide-type">
+          <div class="type-name">cta_preto</div>
+          <h4>CTA Final</h4>
+          <p>Fundo preto, badge, texto de CTA contextualizado em branco. Linha de acento vermelha acima do texto. Último slide obrigatório.</p>
+          <div class="slide-preview" style="background:#000;">
+            <div style="font-size:.55rem;color:#fff;text-align:center;padding:8px;line-height:1.5;">
+              Segue pra não perder<br/>o próximo antes do mercado.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;background:rgba(255,229,0,.05);border:1px solid rgba(255,229,0,.2);border-radius:10px;padding:14px 18px;">
+        <strong style="color:var(--yellow);font-size:.82rem;">📏 Regra de densidade:</strong>
+        <span style="color:#94a3b8;font-size:.8rem;"> Slides com 3 linhas ou menos → <code>texto_curto_imagem</code>. Slides com 4+ linhas → <code>texto_cheio</code>, sem imagem. Prioridade: legibilidade.</span>
+      </div>
+    </section>
+
+    <!-- CAPA TYPES -->
+    <section id="capa-types">
+      <h2>🎨 Tipos de Capa</h2>
+      <p>10 tipos catalogados no banco-capas. O DESIGNER escolhe o tipo que melhor amplifica o gatilho emocional do ângulo. Cada variação de capa entregue com JSON completo pronto para gerar via Imagen 3.</p>
+
+      <div class="capa-grid">
+        <div class="capa-card">
+          <div class="capa-preview"><div class="capa-headline">HEADLINE EM CAIXA ALTA</div></div>
+          <div class="tipo">Tipo 1</div>
+          <h4>Cenário Macro</h4>
+          <p>Vista ampla de cidade, economia, sistemas. Escala + impotência.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#1a0a0a,#000);"><div class="capa-headline" style="color:#ff4444;">HEADLINE URGENTE</div></div>
+          <div class="tipo">Tipo 2</div>
+          <h4>Crise / Colapso</h4>
+          <p>Gráficos caindo, destruição sistêmica. Urgência e medo.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#0a1a0a,#000);"><div class="capa-headline" style="color:#39FF14;">HEADLINE REVELAÇÃO</div></div>
+          <div class="tipo">Tipo 3</div>
+          <h4>Revelação / Oportunidade</h4>
+          <p>Luz no fundo do túnel. Epifania. Dado oculto revelado.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(135deg,#0d0021,#000);"><div class="capa-headline" style="color:#a78bfa;">CONSPIRAÇÃO</div></div>
+          <div class="tipo">Tipo 4</div>
+          <h4>Conspiração / Sistema</h4>
+          <p>Sombras, poder oculto, redes de controle. Desconfiança.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#0a0a1a,#000);"><div class="capa-headline" style="color:#00d4ff;">DADO: $1.000.000</div></div>
+          <div class="tipo">Tipo 5</div>
+          <h4>Dado Âncora</h4>
+          <p>Número impactante em destaque absoluto. Choque de escala.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#1a1000,#000);"><div class="capa-headline" style="color:#f97316;">LINHA DO TEMPO</div></div>
+          <div class="tipo">Tipo 6</div>
+          <h4>Vista Aérea / Infraestrutura</h4>
+          <p>Fotografia aérea noturna. Escala física impressionante.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview"><div class="capa-headline">VS</div></div>
+          <div class="tipo">Tipo 7</div>
+          <h4>Confronto / Versus</h4>
+          <p>Dois lados em conflito. Força vs fraqueza. Antes vs depois.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#001a10,#000);"><div class="capa-headline" style="color:#34d399;">SILHUETA</div></div>
+          <div class="tipo">Tipo 8</div>
+          <h4>Silhueta / Identidade</h4>
+          <p>Figura humana + contexto simbólico. Protagonismo do leitor.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#1a1500,#000);"><div class="capa-headline">MACRO + DETALHE</div></div>
+          <div class="tipo">Tipo 9</div>
+          <h4>Objeto Simbólico</h4>
+          <p>Objeto único em closeup extremo. Metáfora condensada.</p>
+        </div>
+        <div class="capa-card">
+          <div class="capa-preview" style="background:linear-gradient(to bottom,#0a001a,#000);"><div class="capa-headline" style="color:#c084fc;">MATRIX DATA</div></div>
+          <div class="tipo">Tipo 10</div>
+          <h4>Dado / Visualização</h4>
+          <p>Gráfico, chart ou fluxo como arte. Dados viram estética.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTEXTUAL IMAGES -->
+    <section id="contextual">
+      <h2>🖼️ Imagens Contextuais</h2>
+      <p>Imagens geradas para os slides do tipo <code>texto_curto_imagem</code>. Aparecem abaixo do texto, com rounded corners e padding lateral.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="icon">📐</div>
+          <h4>Formato: 3:2 Landscape</h4>
+          <p>Container do slide é 956×650px (proporção 3:2). Imagens devem ser geradas em <code>--aspect-ratio 3:2</code>. Usar 1:1 gera espaço morto e crop errado.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🎯</div>
+          <h4>Composição Tight</h4>
+          <p>O elemento principal deve ocupar 70-80% do frame. Zero espaço morto ao redor. Sujeito próximo às bordas do frame.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🚫</div>
+          <h4>Sem Gradiente Escuro</h4>
+          <p>Gradiente de fade para preto é regra exclusiva da capa. Imagens contextuais têm fundo limpo — nunca degradê escuro nas bordas.</p>
+        </div>
+        <div class="feature-card">
+          <div class="icon">🎨</div>
+          <h4>Conceitual e Metafórica</h4>
+          <p>Cada slide recebe uma imagem exclusiva baseada no gatilho emocional daquele slide. Nunca reutilizar a capa ou outra imagem contextual.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:rgba(0,212,255,.05);border:1px solid rgba(0,212,255,.2);border-radius:10px;padding:16px 20px;">
+        <strong style="color:var(--neon2);font-size:.85rem;">⚙️ Render Engine</strong><br/>
+        <span style="color:#94a3b8;font-size:.8rem;">
+          <code>object-fit: cover</code> + <code>object-position: center center</code> + <code>background: #FFFFFF</code> + <code>border-radius: 16px</code><br/>
+          Não alterar esses parâmetros — validados após múltiplas iterações.
+        </span>
+      </div>
+    </section>
+
+    <!-- CTA TYPES -->
+    <section id="cta-types">
+      <h2>📣 Tipos de CTA</h2>
+      <p>O CTA sempre aparece no último slide (<code>cta_preto</code>). Deve ser contextualizado com a narrativa do carrossel — nunca genérico.</p>
+
+      <div class="feature-grid">
+        <div class="feature-card" style="border-left:3px solid #e05252;">
+          <div class="icon">🚨</div>
+          <h4>CTA Urgência</h4>
+          <p>Sensação de que o momento é agora. Usado quando o carrossel revela uma janela de oportunidade ou ameaça iminente.</p>
+          <div style="margin-top:10px;background:rgba(255,255,255,.04);border-radius:6px;padding:10px;font-size:.78rem;color:#94a3b8;font-style:italic;">
+            "Isso vai mudar nos próximos 90 dias.<br/>Segue pra estar por dentro antes."
+          </div>
+        </div>
+
+        <div class="feature-card" style="border-left:3px solid #a78bfa;">
+          <div class="icon">🔮</div>
+          <h4>CTA Revelação / FOMO</h4>
+          <p>O leitor sente que descobriu algo que poucos sabem. Medo de ficar de fora do próximo conteúdo importante.</p>
+          <div style="margin-top:10px;background:rgba(255,255,255,.04);border-radius:6px;padding:10px;font-size:.78rem;color:#94a3b8;font-style:italic;">
+            "O próximo padrão já está se formando.<br/>Segue aqui pra não perder."
+          </div>
+        </div>
+
+        <div class="feature-card" style="border-left:3px solid #39FF14;">
+          <div class="icon">🎓</div>
+          <h4>CTA Educativo</h4>
+          <p>Posiciona o criador como professor. Quem segue vai aprender antes dos outros e tomar decisões melhores.</p>
+          <div style="margin-top:10px;background:rgba(255,255,255,.04);border-radius:6px;padding:10px;font-size:.78rem;color:#94a3b8;font-style:italic;">
+            "Quem entendeu isso em 2020 saiu na frente.<br/>Me segue pra entender o que vem agora."
+          </div>
+        </div>
+
+        <div class="feature-card" style="border-left:3px solid #f97316;">
+          <div class="icon">🪞</div>
+          <h4>CTA Identificação</h4>
+          <p>O leitor se vê na situação descrita. CTA convida para continuar a jornada junto.</p>
+          <div style="margin-top:10px;background:rgba(255,255,255,.04);border-radius:6px;padding:10px;font-size:.78rem;color:#94a3b8;font-style:italic;">
+            "Se você ainda não sabia disso,<br/>aqui é o lugar certo pra começar."
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;background:rgba(224,82,82,.05);border:1px solid rgba(224,82,82,.2);border-radius:10px;padding:14px 18px;">
+        <strong style="color:var(--red);font-size:.82rem;">❌ CTA Proibido:</strong>
+        <span style="color:#94a3b8;font-size:.8rem;"> "Segue o perfil e compartilha" / "@handle" como linha isolada / mencionar nome de produto ou comunidade como entidade. O CTA promove SEMPRE o perfil pessoal do criador.</span>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing">
+      <h2>💰 Custo por Carrossel</h2>
+      <p>Estimativa baseada em carrossel completo: 10 slides + capa + 5–6 imagens contextuais + 3 legendas.</p>
+
+      <table class="price-table">
+        <thead><tr><th>Item</th><th>Modelo/API</th><th>Qtd</th><th>Custo Unit.</th><th>Subtotal</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Capa</strong> (4:5, 2K)</td><td>Imagen 3</td><td>1</td><td>~$0,04</td><td>~$0,04</td></tr>
+          <tr><td><strong>Imagens contextuais</strong> (3:2, 1K)</td><td>Imagen 3</td><td>5-6</td><td>~$0,04</td><td>~$0,20-0,24</td></tr>
+          <tr><td><strong>COPYWRITER</strong> (roteiro + legendas)</td><td>Claude Haiku</td><td>~30k tokens</td><td>-</td><td>~$0,01</td></tr>
+          <tr><td><strong>NERD</strong> (pesquisa)</td><td>Claude Haiku</td><td>~10k tokens</td><td>-</td><td>~$0,005</td></tr>
+          <tr><td><strong>DESIGNER</strong> (coordenação)</td><td>Gemini Flash</td><td>~8k tokens</td><td>-</td><td>&lt;$0,01</td></tr>
+          <tr><td><strong>DEV</strong> (render + entrega)</td><td>Claude Haiku</td><td>~5k tokens</td><td>-</td><td>~$0,005</td></tr>
+          <tr><td><strong>Render</strong> (Puppeteer local)</td><td>—</td><td>—</td><td>—</td><td>$0</td></tr>
+          <tr><td><strong>Drive / Telegram</strong></td><td>—</td><td>—</td><td>—</td><td>$0</td></tr>
+        </tbody>
+      </table>
+
+      <div class="price-total">
+        <div>
+          <div style="font-size:.82rem;color:#64748b;">Total estimado por carrossel</div>
+          <div style="font-size:.75rem;color:#475569;margin-top:2px;">~75% do custo = geração de imagens</div>
+        </div>
+        <div style="text-align:right;">
+          <div class="num">~$0,30–0,45</div>
+          <div style="font-size:.75rem;color:#64748b;margin-top:2px;">≈ R$1,75–2,60 BRL</div>
+        </div>
+      </div>
+
+      <p style="margin-top:12px;font-size:.78rem;">💡 Para reduzir custo: gerar 3 imagens contextuais em vez de 5-6 → cai para ~$0,20 por carrossel.</p>
+    </section>
+
+    <!-- RULES -->
+    <section id="rules">
+      <h2>📋 Regras Permanentes</h2>
+      <div class="rule-grid">
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>Imagens contextuais em <strong>3:2 landscape</strong></p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>Imagens contextuais em 1:1 ou 4:5</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>Elemento principal ocupa <strong>70-80% do frame</strong></p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>Sujeito pequeno com fundo vazio ao redor</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>Gradiente escuro <strong>exclusivo na capa</strong></p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>Gradiente/fade preto em imagem contextual</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>Slides 4+ linhas → <strong>texto_cheio</strong></p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>Slides densos como texto_curto_imagem</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>CTA <strong>contextualizado</strong> com o tema do carrossel</p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>"Segue o perfil e compartilha" (genérico)</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p><strong>\n</strong> entre parágrafos ou bullets distintos</p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>Traços (—) em qualquer campo de texto</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>Cada slide curto tem <strong>imagem exclusiva</strong></p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>Reutilizar a capa ou outra imagem contextual</p></div>
+        <div class="rule-item ok"><div class="label">✅ Correto</div><p>Fear & Greed como dado de suporte <strong>máx 1x</strong></p></div>
+        <div class="rule-item no"><div class="label">❌ Proibido</div><p>F&G como ângulo central do carrossel</p></div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap">
+      <h2>🗺️ Roadmap</h2>
+      <table class="price-table">
+        <thead><tr><th>Fase</th><th>Descrição</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>v1.0</strong></td><td>Engine completo: pesquisa → roteiro → imagens → render → entrega Telegram + Drive</td><td><span class="pill pill-green">Ativo</span></td></tr>
+          <tr><td><strong>v1.1</strong></td><td>Setup wizard interativo no primeiro boot (config.json automático)</td><td><span class="pill pill-yellow">Em desenvolvimento</span></td></tr>
+          <tr><td><strong>v1.2</strong></td><td>Geração automática de badge para quem não tiver PNG próprio</td><td><span class="pill pill-yellow">Planejado</span></td></tr>
+          <tr><td><strong>v2.0</strong></td><td>Postagem automática no Instagram via Graph API (imediata ou agendada com data/hora BRT)</td><td><span class="pill pill-blue">Roadmap</span></td></tr>
+          <tr><td><strong>v2.1</strong></td><td>Analytics pós-postagem: métricas de alcance, engajamento, salvamentos, compartilhamentos</td><td><span class="pill pill-blue">Roadmap</span></td></tr>
+          <tr><td><strong>v3.0</strong></td><td>Multi-idioma nativo (EN + ES) com banco de capas localizado</td><td><span class="pill pill-blue">Roadmap</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>💡 Sugestões de Evolução Pós-Validação</h3>
+      <p>Após validar o processo com pelo menos 10 carrosseis entregues, recomenda-se avaliar as expansões abaixo:</p>
+
+      <div class="feature-grid" style="margin-top:16px;">
+        <div class="feature-card" style="border:1px solid rgba(57,255,20,.25);">
+          <div class="icon">📡</div>
+          <h4>Fonte de Conteúdo Automatizada</h4>
+          <p>Vincular uma fonte de dados recorrente (newsletter, RSS, conta do Twitter/X, canal do YouTube) para que o skill monitore automaticamente e dispare a produção de um carrossel quando detectar conteúdo relevante.</p>
+          <div style="margin-top:10px;font-size:.75rem;color:#64748b;">
+            <strong style="color:#94a3b8;">Fontes suportadas:</strong> Twitter/X via bird CLI · RSS feeds · YouTube (transcrição automática) · newsletters por e-mail · PDFs de relatórios
+          </div>
+          <div style="margin-top:8px;"><span class="pill pill-yellow">v3.1 — Roadmap</span></div>
+        </div>
+
+        <div class="feature-card" style="border:1px solid rgba(0,212,255,.25);">
+          <div class="icon">📲</div>
+          <h4>Postagem Automática no Instagram</h4>
+          <p>Após render e aprovação (ou em modo totalmente autônomo), o skill posta o carrossel diretamente no Instagram via Meta Graph API — com legenda, hashtags e agendamento de horário.</p>
+          <div style="margin-top:10px;font-size:.75rem;color:#64748b;">
+            <strong style="color:#94a3b8;">Funcionalidades:</strong> Postagem imediata ou agendada · Seleção de legenda (1 de 3 variações) · Hashtags automáticas por nicho · Relatório de publicação
+          </div>
+          <div style="margin-top:8px;">
+            <span class="pill pill-blue">v2.0 — Roadmap</span>
+            <span style="margin-left:6px;font-size:.7rem;color:#64748b;">Requer: Meta App + permissão <code>instagram_content_publish</code></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <strong>CarrosselAI Skill — Especificação para Distribuição</strong><br/>
+  <span style="margin-top:10px;display:block;color:#94a3b8;">
+    Workflow desenvolvido e validado em produção por
+    <a href="https://www.instagram.com/diego.spanevello" target="_blank" style="color:var(--neon2);text-decoration:none;font-weight:700;">@diego.spanevello</a>
+    — criador de conteúdo sobre cripto, DeFi e macroeconomia · 23/03/2026
+  </span>
+  <div style="margin-top:16px;">
+    <span class="pill pill-green">OpenClaw Compatible</span>
+    &nbsp;
+    <span class="pill pill-blue">ClawHub Ready</span>
+    &nbsp;
+    <span class="pill pill-yellow">GitHub: openclaw-skills/carrossel-ai</span>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06);font-size:.72rem;color:#475569;">
+    Este documento é a especificação oficial da skill CarrosselAI. Pode ser distribuído livremente como parte do repositório da skill.<br/>
+    Para contribuições e issues: <code style="color:#94a3b8;">github.com/openclaw-skills/carrossel-ai</code>
+  </div>
+</footer>
+
+<script>
+  function setActive(el) {
+    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+  }
+  // Highlight active on scroll
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const links = document.querySelectorAll('.sidebar a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    links.forEach(a => {
+      a.classList.remove('active');
+      if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
