@@ -523,10 +523,31 @@ npm install puppeteer
           <h4>Prefere controlar o processo ou receber tudo automático?</h4>
           <p>Define se o assistente vai pedir sua aprovação antes de avançar, ou vai entregar o carrossel completo sem interrupções.</p>
           <div class="options">
-            <span class="opt">Autônomo — entrega sem me perguntar</span>
-            <span class="opt default">Semi-autônomo — quero aprovar o ângulo e o CTA antes de gerar</span>
+            <span class="opt default">Semi-autônomo — quero controlar cada etapa</span>
+            <span class="opt">Autônomo total — entrega sem me perguntar</span>
           </div>
-          <div style="margin-top:8px;font-size:.75rem;color:#64748b;">💡 Recomendamos começar no modo semi-autônomo para validar o estilo antes de automatizar completamente.</div>
+          <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="background:rgba(255,229,0,.06);border:1px solid rgba(255,229,0,.2);border-radius:8px;padding:14px;">
+              <div style="font-size:.75rem;font-weight:700;color:#FFE500;margin-bottom:8px;">🔀 SEMI-AUTÔNOMO</div>
+              <div style="font-size:.75rem;color:#94a3b8;line-height:1.6;">
+                ① Escolha do ângulo<br>
+                ② Revisão do roteiro<br>
+                ③ Seleção entre 5 capas<br>
+                ④ Aprovação das imagens contextuais<br>
+                ⑤ Revisão do copy e CTA<br>
+                <span style="color:#64748b;margin-top:6px;display:block;">Ideal para calibrar identidade visual nas primeiras rodadas.</span>
+              </div>
+            </div>
+            <div style="background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.2);border-radius:8px;padding:14px;">
+              <div style="font-size:.75rem;font-weight:700;color:var(--neon);margin-bottom:8px;">⚡ AUTÔNOMO TOTAL</div>
+              <div style="font-size:.75rem;color:#94a3b8;line-height:1.6;">
+                Fala o tema → recebe tudo pronto.<br><br>
+                <span style="color:#FFE500;">⏱ Tempo estimado</span> informado no início.<br>
+                <span style="color:#FFE500;">📡 Pings de progresso</span> a cada imagem gerada — você nunca fica no escuro.<br>
+                <span style="color:#64748b;margin-top:6px;display:block;">Use após calibrar o estilo no modo semi-autônomo.</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -692,8 +713,8 @@ npm install puppeteer
           <h4>Autonomia do fluxo</h4>
           <p>Define se o assistente pede aprovação antes de avançar, ou entrega sem interrupções.</p>
           <div class="options">
-            <span class="opt default">Autônomo total — entrega sem perguntar</span>
-            <span class="opt">Semi-autônomo — pausa para aprovar ângulo + CTA</span>
+            <span class="opt default">Semi-autônomo — controlo cada etapa</span>
+            <span class="opt">Autônomo total — entrega sem perguntar</span>
           </div>
         </div>
       </div>
@@ -703,12 +724,31 @@ npm install puppeteer
     <section id="modes">
       <h2>🤖 Modos de Operação</h2>
       <div class="mode-cards">
+        <div class="mode-card semi">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <span style="font-size:1.4rem">🔀</span>
+            <div>
+              <h4>Modo Semi-Autônomo</h4>
+              <span class="pill pill-yellow" style="font-size:.65rem">Recomendado para começar</span>
+            </div>
+          </div>
+          <ul>
+            <li>✅ Pesquisa a fonte automaticamente</li>
+            <li>⏸️ Propõe 3 ângulos → você escolhe</li>
+            <li>⏸️ Gera roteiro → você revisa</li>
+            <li>⏸️ 5 opções de capa → você escolhe a favorita</li>
+            <li>⏸️ Imagens contextuais → você aprova</li>
+            <li>⏸️ Copy + CTA → você revisa antes de renderizar</li>
+            <li>✅ Renderiza + envia + faz upload</li>
+          </ul>
+          <p style="margin-top:12px;font-size:.78rem;color:#64748b;">Ideal para calibrar identidade visual e voz nas primeiras rodadas. Após aprovado o estilo, migre para o modo autônomo.</p>
+        </div>
         <div class="mode-card auto">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <span style="font-size:1.4rem">🚀</span>
+            <span style="font-size:1.4rem">⚡</span>
             <div>
-              <h4>Modo Autônomo</h4>
-              <span class="pill pill-green" style="font-size:.65rem">Padrão</span>
+              <h4>Modo Autônomo Total</h4>
+              <span class="pill pill-green" style="font-size:.65rem">Escala sem interrupção</span>
             </div>
           </div>
           <ul>
@@ -717,26 +757,18 @@ npm install puppeteer
             <li>✅ Define o CTA contextualizado</li>
             <li>✅ Gera roteiro + capas + imagens</li>
             <li>✅ Renderiza + envia + faz upload</li>
-            <li>✅ Zero interrupções do usuário</li>
+            <li>⏱️ <strong>Informa tempo estimado</strong> antes de começar</li>
+            <li>📡 <strong>Pings de progresso</strong> a cada imagem gerada</li>
           </ul>
-          <p style="margin-top:12px;font-size:.78rem;color:#64748b;">Ideal para quem quer produção em escala sem precisar revisar cada passo.</p>
-        </div>
-        <div class="mode-card semi">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-            <span style="font-size:1.4rem">⏸️</span>
-            <div>
-              <h4>Modo Semi-Autônomo</h4>
-              <span class="pill pill-yellow" style="font-size:.65rem">Controle total</span>
-            </div>
+          <div style="margin-top:12px;background:rgba(57,255,20,.06);border:1px solid rgba(57,255,20,.15);border-radius:8px;padding:10px 12px;font-size:.75rem;color:#94a3b8;line-height:1.6;">
+            <strong style="color:var(--neon);">📡 Como funcionam os pings:</strong><br>
+            📸 Capa [1/5] gerada ✅<br>
+            📸 Capa [2/5] gerada ✅ ... até a 5ª<br>
+            🖼 Imagem contextual [1/N] gerada ✅ ... para cada slide curto<br>
+            🎬 Todas as imagens prontas. Iniciando render...<br>
+            <span style="color:#64748b;">Nunca mais de 2 min sem um sinal de vida.</span>
           </div>
-          <ul>
-            <li>✅ Pesquisa a fonte automaticamente</li>
-            <li>⏸️ Propõe 3 ângulos → aguarda escolha</li>
-            <li>⏸️ Propõe CTA → aguarda confirmação</li>
-            <li>✅ Gera roteiro + capas + imagens</li>
-            <li>✅ Renderiza + envia + faz upload</li>
-          </ul>
-          <p style="margin-top:12px;font-size:.78rem;color:#64748b;">Ideal para quem quer controle editorial sobre o ângulo e mensagem do carrossel.</p>
+          <p style="margin-top:12px;font-size:.78rem;color:#64748b;">Ideal para produção em escala. Use após calibrar o estilo no modo semi-autônomo.</p>
         </div>
       </div>
     </section>

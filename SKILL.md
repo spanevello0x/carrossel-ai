@@ -197,16 +197,38 @@ Salvar em: `config.storage.google_drive`, `config.storage.drive_folder_id`
 ```
 Prefere controlar o processo ou receber tudo automático?
 
-SEMI-AUTÔNOMO [recomendado para começar]:
-  O assistente propõe 3 ângulos e aguarda sua escolha antes de continuar.
-  Você aprova o CTA antes de gerar as imagens.
-  Ideal para validar o estilo nas primeiras rodadas.
+──────────────────────────────────────────
+🔀 SEMI-AUTÔNOMO [recomendado para começar]
+──────────────────────────────────────────
+Você participa de cada decisão antes de avançar:
 
-AUTÔNOMO TOTAL:
-  O assistente escolhe o ângulo mais forte e entrega sem interrupções.
-  Use após validar que o estilo está do jeito que você quer.
+  ① Proposta de 3 ângulos → você escolhe
+  ② Roteiro gerado → você revisa
+  ③ 5 opções de capa → você escolhe a favorita
+  ④ Imagens contextuais → você aprova ou pede ajuste
+  ⑤ Copy (legendas + CTA) → você revisa antes de renderizar
 
-1. Semi-autônomo — quero aprovar o ângulo e CTA  [padrão]
+Ideal para validar estilo, voz e identidade visual nas primeiras rodadas.
+Depois de calibrado, você pode migrar para o modo autônomo.
+
+──────────────────────────────────────────
+⚡ AUTÔNOMO TOTAL
+──────────────────────────────────────────
+Você fala o tema. O assistente faz tudo e entrega pronto.
+
+  • Escolhe o ângulo mais forte automaticamente
+  • Gera todas as imagens sem pedir aprovação
+  • Renderiza e envia os slides finalizados
+
+  ⏱ Tempo estimado informado no início de cada execução
+  📡 Pings de progresso enviados a cada etapa da geração de imagens
+     (você sabe exatamente onde está o processo, sem ficar no escuro)
+
+Use após validar que o estilo está do jeito que você quer.
+
+──────────────────────────────────────────
+
+1. Semi-autônomo — quero controlar cada etapa  [padrão]
 2. Autônomo total — entrega sem me perguntar
 ```
 Salvar em: `config.mode` ("semi-auto" | "auto")
@@ -231,6 +253,47 @@ Custo estimado: ~R$2 por carrossel completo
 ---
 
 ## FLUXO DE EXECUÇÃO (6 passos)
+
+### 🚦 INÍCIO DE EXECUÇÃO — MODO AUTÔNOMO (obrigatório)
+
+**Sempre que o modo for `auto`, antes de iniciar qualquer passo:**
+
+1. Calcular e informar o tempo estimado total:
+```
+⚡ Modo autônomo ativado.
+
+Tema: [tema]
+Etapas: pesquisa → roteiro → 5 capas → [N] imagens contextuais → render → entrega
+⏱ Tempo estimado: ~[X–Y] minutos
+
+Iniciando agora... acompanhe os pings de progresso abaixo.
+```
+
+2. Estimativa de tempo por etapa (usar para calcular o total):
+   - Pesquisa + roteiro: ~1–2 min
+   - Cada imagem gerada (Nano Banana Pro): ~1–2 min
+   - 5 capas + imagens contextuais (média 4): ~9–18 min total de imagens
+   - Render + entrega: ~1 min
+   - **Total típico: 12–22 minutos**
+
+3. Enviar **ping de progresso** a cada imagem gerada durante o Passo 5:
+```
+📸 Capa [1/5] gerada ✅
+📸 Capa [2/5] gerada ✅
+...
+📸 Capa [5/5] gerada ✅
+🖼 Imagem contextual [1/4] gerada ✅
+🖼 Imagem contextual [2/4] gerada ✅
+...
+🎬 Todas as imagens prontas. Iniciando render...
+```
+
+**Regra:** nunca sumir por mais de 2 minutos sem enviar um ping. Se uma imagem demorar mais que o normal, notificar:
+```
+⏳ Gerando imagem [N]... (pode levar mais ~1 min)
+```
+
+---
 
 ### PASSO 1 — Pesquisa da Fonte
 
