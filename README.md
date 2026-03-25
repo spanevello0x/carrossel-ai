@@ -13,7 +13,7 @@
 Você fala o tema. A IA pesquisa, escreve o roteiro, gera as imagens, monta os slides e envia tudo pronto — sem Canva, sem Photoshop, sem horas perdidas.
 
 ```
-Você: "Cria um carrossel sobre Bitcoin e inflação"
+Você: "Cria um carrossel sobre produtividade para empreendedores"
 
 IA: pesquisa → roteiro → capas → imagens → render → entrega no Telegram
 ```
@@ -69,7 +69,7 @@ clawhub install carrossel-ai      # esta skill
 
 ### Manual
 ```bash
-git clone https://github.com/spanevello0x/carrossel-ai
+git clone https://github.com/SEU-USUARIO/carrossel-ai
 cd carrossel-ai
 bash setup.sh
 ```

@@ -27,14 +27,14 @@ Quando o usuário usar o skill pela primeira vez, ou executar `/carrossel-setup`
 ### Pergunta 1 — Nome do perfil
 ```
 Qual é o seu nome ou nome do perfil no Instagram?
-(Ex: "Maria | Finanças", "Rafael Crypto", "Ana Negócios")
+(Ex: "Maria | Finanças", "Lucas Marketing", "Ana Negócios")
 ```
 Salvar em: `config.profile.name`
 
 ### Pergunta 2 — Handle
 ```
 Qual é o seu @handle do Instagram?
-(Ex: @maria.financas, @rafaelcrypto)
+(Ex: @maria.financas, @lucas.mkt)
 ```
 Salvar em: `config.profile.handle`
 
@@ -42,13 +42,13 @@ Salvar em: `config.profile.handle`
 ```
 Qual é o seu nicho de atuação?
 
-1. Cripto / DeFi / Web3
-2. Finanças pessoais / Investimentos
-3. Negócios / Empreendedorismo
-4. Marketing / Vendas
-5. Tecnologia / IA
-6. Saúde / Bem-estar
-7. Educação
+1. Marketing / Vendas
+2. Negócios / Empreendedorismo
+3. Finanças pessoais / Investimentos
+4. Tecnologia / IA
+5. Saúde / Bem-estar
+6. Educação
+7. Lifestyle / Desenvolvimento pessoal
 8. Outro (descrever)
 ```
 Salvar em: `config.profile.niche`

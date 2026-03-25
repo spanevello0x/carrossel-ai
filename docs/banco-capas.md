@@ -129,20 +129,20 @@ Headline formula: [VERBO] [SUJEITO] SEGUE / O MESMO ROTEIRO. / [QUEM] JÁ SABE O
 
 ---
 
-## TIPO 4 — CONTRASTE DOIS MUNDOS (VAREJO vs INSTITUCIONAL)
+## TIPO 4 — CONTRASTE DOIS MUNDOS (MAIORIA vs ELITE)
 
 Gatilho: REVOLTA + IDENTIFICAÇÃO
 Headline formula: VOCÊ [AÇÃO EMOCIONAL]. / ELES [AÇÃO CALCULADA]. / SEMPRE FOI ASSIM.
 
 ### MODELO LIMPO
 {
- "prompt": "A vertically split screen image. Left side: ordinary person sitting at a desk, face illuminated by a deep red falling stock chart on screen, expression blank and paralyzed with fear, cold desaturated blue-gray tones. Right side: dark boardroom, several men in sharp suits seated calmly around a long table, faces composed and calculating, cold blue light from data screens, no emotion. The dividing line between the two sides is sharp and dramatic. Atmosphere: contrast between panic and cold calculation. Style: photorealistic, cinematic, high contrast, editorial photography. Vertical format 4:5. 8K resolution.",
+ "prompt": "A vertically split screen image. Left side: ordinary person sitting at a desk, face illuminated by a glowing screen showing bad news, expression blank and paralyzed with worry, cold desaturated blue-gray tones. Right side: dark boardroom, several people in sharp suits seated calmly around a long table, faces composed and calculating, cold blue light from data screens, no emotion. The dividing line between the two sides is sharp and dramatic. Atmosphere: contrast between anxiety and cold calculation. Style: photorealistic, cinematic, high contrast, editorial photography. Vertical format 4:5. 8K resolution.",
  "negative_prompt": "happy expressions, warm colors on right side, cartoon, illustration, bright lighting, flat design, stock photo aesthetic"
 }
 
 ### MODELO HEADLINE
 {
- "prompt": "A vertically split screen image. Left side: ordinary person sitting at a desk, face illuminated by a deep red falling stock chart on screen, expression blank and paralyzed with fear, cold desaturated blue-gray tones. Right side: dark boardroom, several men in sharp suits seated calmly around a long table, faces composed and calculating, cold blue light from data screens, no emotion. The dividing line between the two sides is sharp and dramatic. Atmosphere: contrast between panic and cold calculation. Style: photorealistic, cinematic, high contrast, editorial photography. Vertical format 4:5. 8K resolution.",
+ "prompt": "A vertically split screen image. Left side: ordinary person sitting at a desk, face illuminated by a glowing screen showing bad news, expression blank and paralyzed with worry, cold desaturated blue-gray tones. Right side: dark boardroom, several people in sharp suits seated calmly around a long table, faces composed and calculating, cold blue light from data screens, no emotion. The dividing line between the two sides is sharp and dramatic. Atmosphere: contrast between anxiety and cold calculation. Style: photorealistic, cinematic, high contrast, editorial photography. Vertical format 4:5. 8K resolution.",
  "text_overlay": {
   "headline": "[HEADLINE EM PT-BR AQUI]",
   "position": "bottom",
@@ -169,13 +169,13 @@ Headline formula: [DADO 1]: [NÚMERO] / [DADO 2]: [NÚMERO] / O DADO QUE [IMPLIC
 
 ### MODELO LIMPO
 {
- "prompt": "Pure black background. A glowing green monospace terminal screen fills the frame, displaying financial data in retro computer font — numbers, percentages, labels in cascading lines. A blinking cursor at the end of the last line. Slight scanline texture overlay. Atmosphere: urgency, raw data, machine precision, no human element. Style: high contrast digital art, retro terminal aesthetic, clean and minimal. Vertical format 4:5. 8K resolution.",
+ "prompt": "Pure black background. A glowing green monospace terminal screen fills the frame, displaying data in retro computer font — numbers, percentages, labels in cascading lines. A blinking cursor at the end of the last line. Slight scanline texture overlay. Atmosphere: urgency, raw data, machine precision, no human element. Style: high contrast digital art, retro terminal aesthetic, clean and minimal. Vertical format 4:5. 8K resolution.",
  "negative_prompt": "colorful, warm tones, cartoon, people, faces, modern UI design, icons, gradients"
 }
 
 ### MODELO HEADLINE
 {
- "prompt": "Pure black background. A glowing green monospace terminal screen fills the frame, displaying financial data in retro computer font — numbers, percentages, labels in cascading lines. A blinking cursor at the end of the last line. Slight scanline texture overlay. Atmosphere: urgency, raw data, machine precision, no human element. Style: high contrast digital art, retro terminal aesthetic, clean and minimal. Vertical format 4:5. 8K resolution.",
+ "prompt": "Pure black background. A glowing green monospace terminal screen fills the frame, displaying data in retro computer font — numbers, percentages, labels in cascading lines. A blinking cursor at the end of the last line. Slight scanline texture overlay. Atmosphere: urgency, raw data, machine precision, no human element. Style: high contrast digital art, retro terminal aesthetic, clean and minimal. Vertical format 4:5. 8K resolution.",
  "text_overlay": {
   "headline": "[HEADLINE EM PT-BR AQUI]",
   "position": "bottom",
@@ -202,13 +202,13 @@ Headline formula: [QUEM SOFRE] FICA [CONSEQUÊNCIA]. / [QUEM LUCRA] CONTINUA [A�
 
 ### MODELO LIMPO
 {
- "prompt": "Aerial night shot of a large Middle Eastern city with a partial blackout — half the city in complete darkness, half illuminated. In the illuminated industrial areas, a distinctive green-blue glow characteristic of Bitcoin mining farms is visible between buildings. The contrast between dark residential areas and the lit mining operations is stark and dramatic. Camera angle: high altitude satellite-style perspective, cold and distant. Color palette: deep black void for dark areas, warm city lights for inhabited zones, cold green-blue for mining areas. Style: photorealistic aerial photography, cinematic, documentary. Vertical format 4:5. 8K resolution.",
+ "prompt": "Aerial night shot of a large metropolis with a partial blackout — half the city in complete darkness, half illuminated. The contrast between dark residential areas and the brightly lit industrial and commercial zones is stark and dramatic. Camera angle: high altitude satellite-style perspective, cold and distant. Color palette: deep black void for dark areas, warm city lights for inhabited zones. Style: photorealistic aerial photography, cinematic, documentary. Vertical format 4:5. 8K resolution.",
  "negative_prompt": "cartoon, illustration, warm overall tones, people, close-up, daylight, bright sky"
 }
 
 ### MODELO HEADLINE
 {
- "prompt": "Aerial night shot of a large Middle Eastern city with a partial blackout — half the city in complete darkness, half illuminated. In the illuminated industrial areas, a distinctive green-blue glow characteristic of Bitcoin mining farms is visible between buildings. The contrast between dark residential areas and the lit mining operations is stark and dramatic. Camera angle: high altitude satellite-style perspective, cold and distant. Color palette: deep black void for dark areas, warm city lights for inhabited zones, cold green-blue for mining areas. Style: photorealistic aerial photography, cinematic, documentary. Vertical format 4:5. 8K resolution.",
+ "prompt": "Aerial night shot of a large metropolis with a partial blackout — half the city in complete darkness, half illuminated. The contrast between dark residential areas and the brightly lit industrial and commercial zones is stark and dramatic. Camera angle: high altitude satellite-style perspective, cold and distant. Color palette: deep black void for dark areas, warm city lights for inhabited zones. Style: photorealistic aerial photography, cinematic, documentary. Vertical format 4:5. 8K resolution.",
  "text_overlay": {
   "headline": "[HEADLINE EM PT-BR AQUI]",
   "position": "bottom",
@@ -268,13 +268,13 @@ Headline formula: UM [AGENTE NÃO-HUMANO] FEZ [RESULTADO]. / ENQUANTO VOCÊ [AÇ
 
 ### MODELO LIMPO
 {
- "prompt": "A dark trading desk setup with multiple monitors glowing in the darkness. On the screens: a prediction market dashboard with a large green profit number. Seated in the office chair: a metallic robot figure with glowing red LED eyes, posture of a focused trader. No human in the scene — only the machine operating alone in the dark. Subtle green neon reflections on the desk surface. Style: photorealistic cyberpunk, cinematic, high contrast, dark atmosphere. Vertical format 4:5. 8K resolution.",
+ "prompt": "A dark desk setup with multiple monitors glowing in the darkness. On the screens: complex dashboards with data visualizations and a large green number. Seated in the office chair: a metallic robot figure with glowing red LED eyes, posture of a focused operator. No human in the scene — only the machine operating alone in the dark. Subtle green neon reflections on the desk surface. Style: photorealistic cyberpunk, cinematic, high contrast, dark atmosphere. Vertical format 4:5. 8K resolution.",
  "negative_prompt": "humans, daylight, warm colors, cartoon, illustration, flat design, bright background, cute robot"
 }
 
 ### MODELO HEADLINE
 {
- "prompt": "A dark trading desk setup with multiple monitors glowing in the darkness. On the screens: a prediction market dashboard with a large green profit number. Seated in the office chair: a metallic robot figure with glowing red LED eyes, posture of a focused trader. No human in the scene — only the machine operating alone in the dark. Subtle green neon reflections on the desk surface. Style: photorealistic cyberpunk, cinematic, high contrast, dark atmosphere. Vertical format 4:5. 8K resolution.",
+ "prompt": "A dark desk setup with multiple monitors glowing in the darkness. On the screens: complex dashboards with data visualizations and a large green number. Seated in the office chair: a metallic robot figure with glowing red LED eyes, posture of a focused operator. No human in the scene — only the machine operating alone in the dark. Subtle green neon reflections on the desk surface. Style: photorealistic cyberpunk, cinematic, high contrast, dark atmosphere. Vertical format 4:5. 8K resolution.",
  "text_overlay": {
   "headline": "[HEADLINE EM PT-BR AQUI]",
   "position": "bottom",
@@ -294,20 +294,20 @@ Headline formula: UM [AGENTE NÃO-HUMANO] FEZ [RESULTADO]. / ENQUANTO VOCÊ [AÇ
 
 ---
 
-## TIPO 9 — FAZENDA DE MINERAÇÃO (ESCALA INDUSTRIAL)
+## TIPO 9 — INFRAESTRUTURA INDUSTRIAL / ESCALA MASSIVA
 
 Gatilho: CHOQUE + ESCALA
-Headline formula: ENQUANTO VOCÊ [AÇÃO COMUM], / [SUJEITO] MINERA [PRODUTO] / POR [PREÇO BAIXO]. / VENDE POR [PREÇO ALTO].
+Headline formula: ENQUANTO VOCÊ [AÇÃO COMUM], / [SUJEITO] [AÇÃO INDUSTRIAL] / POR [CUSTO BAIXO]. / VENDE POR [PREÇO ALTO].
 
 ### MODELO LIMPO
 {
- "prompt": "Interior of a massive Bitcoin mining facility. Endless rows of ASIC miners stretching to the horizon, all blinking with green and blue LEDs in the dark. Camera at floor level looking toward the vanishing point — the rows appear infinite. Subtle mist in the air from cooling systems. Cold industrial atmosphere, no humans. Color palette: deep blacks, blue-green LED glow, faint warm light from distant power indicators. Style: photorealistic, cinematic, ultra wide angle, documentary industrial photography. Vertical format 4:5. 8K resolution.",
+ "prompt": "Interior of a massive server farm or data center. Endless rows of server racks stretching to the horizon, all blinking with green and blue LEDs in the dark. Camera at floor level looking toward the vanishing point — the rows appear infinite. Subtle mist in the air from cooling systems. Cold industrial atmosphere, no humans. Color palette: deep blacks, blue-green LED glow, faint warm light from distant power indicators. Style: photorealistic, cinematic, ultra wide angle, documentary industrial photography. Vertical format 4:5. 8K resolution.",
  "negative_prompt": "humans, warm lighting, cartoon, illustration, bright background, small scale, cozy, daylight"
 }
 
 ### MODELO HEADLINE
 {
- "prompt": "Interior of a massive Bitcoin mining facility. Endless rows of ASIC miners stretching to the horizon, all blinking with green and blue LEDs in the dark. Camera at floor level looking toward the vanishing point — the rows appear infinite. Subtle mist in the air from cooling systems. Cold industrial atmosphere, no humans. Color palette: deep blacks, blue-green LED glow, faint warm light from distant power indicators. Style: photorealistic, cinematic, ultra wide angle, documentary industrial photography. Vertical format 4:5. 8K resolution.",
+ "prompt": "Interior of a massive server farm or data center. Endless rows of server racks stretching to the horizon, all blinking with green and blue LEDs in the dark. Camera at floor level looking toward the vanishing point — the rows appear infinite. Subtle mist in the air from cooling systems. Cold industrial atmosphere, no humans. Color palette: deep blacks, blue-green LED glow, faint warm light from distant power indicators. Style: photorealistic, cinematic, ultra wide angle, documentary industrial photography. Vertical format 4:5. 8K resolution.",
  "text_overlay": {
   "headline": "[HEADLINE EM PT-BR AQUI]",
   "position": "bottom",
@@ -361,7 +361,7 @@ Headline formula: SEXTA, 22H. / MERCADOS FECHADOS. / [PERSONAGEM]: [AÇÃO INESP
 
 Cenas pré-definidas para o Tipo 10:
 - Carro das Bombas: muscle car, trunk full of missiles, 22h Friday, leaving casually
-- Piscina do Caos: poolside with cigar and beer, market charts collapsing on screens behind, completely unbothered
+- Piscina do Caos: poolside with cigar and beer, news headlines collapsing on screens behind, completely unbothered
 - Churrasqueiro: BBQing with treaties burning in charcoal, beer in hand, advisors panicking in background
 - Boliche: bowling, pins are countries, scoreboard shows consecutive strikes
 - Sofá Casa Branca: presidential office couch channel surfing, TVs showing global panic, bored expression
@@ -374,5 +374,5 @@ Cenas pré-definidas para o Tipo 10:
 2. Escolher o modelo — LIMPO (só imagem) ou HEADLINE (imagem + texto)
 3. Substituir [HEADLINE EM PT-BR AQUI] pela headline específica do carrossel
 4. Para o Tipo 10, preencher [DESCREVER CENA/PALETA/ATMOSFERA]
-5. Copiar o campo "prompt" para Midjourney, Flux ou Freepik
+5. Copiar o campo "prompt" para o gerador de imagens configurado
 6. Usar o "text_overlay" como briefing para o designer no Canva/Figma
