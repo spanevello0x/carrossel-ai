@@ -454,13 +454,19 @@ Posições disponíveis: `bottom_left`, `centered`, `bottom_center`, `crescente`
 Para cada `📌 SLIDE CURTO` do roteiro, gerar 1 imagem contextual.
 
 Regras obrigatórias (validadas em produção):
-- **Formato: 3:2 LANDSCAPE** — o container do slide é 956×650px (3:2). Usar 1:1 gera espaço morto
+- **Proporção livre** — gerar na proporção natural do conteúdo: 3:2 landscape para prints/notícias, 1:1 para conceituais. O engine calcula a altura do container automaticamente via `sharp` (lê o aspect ratio real da imagem)
 - **Composição TIGHT** — elemento principal ocupa 70–80% do frame
 - **SEM gradiente escuro** — regra exclusiva da capa
 - Imagem conceitual/metafórica — não literal
 - Cada slide curto = imagem própria e única
 - ❌ NUNCA reutilizar a capa como imagem contextual
 - ❌ NUNCA reutilizar a mesma imagem em mais de um slide
+
+**Como o engine renderiza as imagens contextuais:**
+- O `render-carousel.js` usa `sharp` para ler as dimensões reais de cada imagem local
+- A altura do container é calculada como: `largura (956px) × (altura_img / largura_img)`, com cap de 700px
+- A imagem renderiza com `object-fit: contain` — aparece inteira, sem corte e sem margens
+- Funciona corretamente para qualquer proporção: landscape (print), quadrado (conceitual) ou portrait
 
 JSON de imagem contextual:
 ```json
@@ -556,7 +562,8 @@ node scripts/render-carousel.js /tmp/carrossel-tema/input.json
 ```
 
 **Parâmetros do render (render-carousel.js):**
-- `object-fit: cover` + `object-position: center center` — imagens preenchem sem borda
+- `object-fit: contain` + `object-position: center center` — imagem aparece inteira, sem corte
+- Altura do container calculada automaticamente via `sharp` (aspect ratio real da imagem)
 - `background: #FFFFFF` no container das imagens contextuais
 - `border-radius: 16px` nas imagens contextuais
 - Badge preto nos slides brancos (`texto_cheio` e `texto_curto_imagem`)
@@ -623,13 +630,14 @@ Cada legenda:
 ## REGRAS PERMANENTES
 
 ### Imagens contextuais
-- ✅ Formato: 3:2 landscape
+- ✅ Proporção: 3:2 landscape para prints/notícias, 1:1 para conceituais
 - ✅ Elemento principal: 70–80% do frame
-- ✅ `object-fit: cover` + `object-position: center center`
+- ✅ Engine usa `sharp` para calcular altura do container pelo ratio real da imagem
+- ✅ `object-fit: contain` — imagem inteira, sem corte, sem margens
 - ✅ Background container: `#FFFFFF`
 - ❌ Sem gradiente escuro
 - ❌ Nunca reutilizar capa ou outra imagem contextual
-- ❌ Nunca 1:1 ou 4:5 para imagens contextuais
+- ❌ Nunca usar `object-fit: cover` nas imagens contextuais (causava corte)
 
 ### Texto dos slides
 - ❌ Nunca traços (—) como separador

@@ -16,12 +16,13 @@
 
 'use strict';
 
-const puppeteer = require('puppeteer');
+const puppeteer = require('/home/molt/.openclaw/workspace/node_modules/puppeteer');
 const fs = require('fs');
 const path = require('path');
+const sharp = require('sharp');
 
 // ── Constantes (calibradas com Figma refs) ──────────────────────────────────
-const ASSETS_DIR = path.resolve(__dirname, '../skills/carrossel-ai/assets');
+const ASSETS_DIR = path.resolve(__dirname, '../skills/carrossel-intus/assets');
 const BADGE_BLACK = path.join(ASSETS_DIR, 'badge-black.png');
 const BADGE_WHITE = path.join(ASSETS_DIR, 'badge-white.png');
 
@@ -63,6 +64,20 @@ async function resolveImageSrc(imageUrl) {
     const data = fs.readFileSync(imageUrl);
     return `data:${mime};base64,${data.toString('base64')}`;
   }
+  return null;
+}
+
+/**
+ * getImageRatio — retorna height/width de uma imagem local (ou null se não disponível)
+ * Usado para calcular altura proporcional do container sem cortar nem adicionar margens.
+ */
+async function getImageRatio(imageUrl) {
+  if (!imageUrl || imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) return null;
+  if (!fs.existsSync(imageUrl)) return null;
+  try {
+    const meta = await sharp(imageUrl).metadata();
+    if (meta.width && meta.height) return meta.height / meta.width;
+  } catch (e) { /* ignora */ }
   return null;
 }
 
@@ -188,15 +203,19 @@ ${bodyContent}
 /**
  * texto_curto_imagem — fundo branco, badge topo, texto + imagem opcional
  */
-function templateTextoCurtoImagem({ text, badgeSrc, imageSrc }) {
+function templateTextoCurtoImagem({ text, badgeSrc, imageSrc, imgRatio = null }) {
   // Se tem imagem: texto menor + imagem embaixo
   // Se não tem imagem: texto ocupa mais espaço (mas font-size de texto curto)
   const hasImage = !!imageSrc;
   const fontSize = hasImage ? 44 : 46;
-  
-  // Imagem: posicionar abaixo do texto, antes da borda inferior
-  // 650px = maior quadrado que cabe sem sobreposição com o texto
-  const imgH = 650;
+
+  // Altura do container de imagem:
+  //   - Se imgRatio disponível: altura proporcional real (width × ratio), capped em 700px
+  //   - Fallback: 650px (quadrado aproximado)
+  const imgContainerW = CONTENT_W; // 956px
+  const imgH = imgRatio
+    ? Math.min(Math.round(imgContainerW * imgRatio), 700)
+    : 650;
 
   const imageBlock = hasImage ? `
     <div class="image-wrap" style="
@@ -207,9 +226,9 @@ function templateTextoCurtoImagem({ text, badgeSrc, imageSrc }) {
       height: ${imgH}px;
       border-radius: 16px;
       overflow: hidden;
-      background: #FFFFFF;
+      background: #fff;
     ">
-      <img src="${imageSrc}" alt="" style="width:100%; height:100%; object-fit:cover; object-position:center center;"/>
+      <img src="${imageSrc}" alt="" style="width:100%; height:100%; object-fit:contain; object-position:center center; display:block;"/>
     </div>` : '';
 
   const textBottom = hasImage ? `bottom: ${PAD + imgH + 30}px;` : `bottom: ${PAD}px;`;
@@ -547,7 +566,8 @@ async function generateSlideHtml(slide) {
     }
     case 'texto_curto_imagem': {
       const badgeSrc = loadBadgeAsBase64('black');
-      return templateTextoCurtoImagem({ text, badgeSrc, imageSrc });
+      const imgRatio = await getImageRatio(image_url);
+      return templateTextoCurtoImagem({ text, badgeSrc, imageSrc, imgRatio });
     }
     case 'texto_cheio': {
       const badgeSrc = loadBadgeAsBase64('black');
